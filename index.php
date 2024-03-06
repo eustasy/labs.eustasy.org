@@ -31,8 +31,7 @@
 	</div>
 	<div class="whole smablet-half">
 		<h3>Authenticatron</h3>
-		<p class="text-left">Authenticatron is a simple, procedural PHP script to create Google Authenticator secrets and corresponding QR codes,
-then verify the entered response over a given time variance.</p>
+		<p class="text-left">Authenticatron is a simple, procedural PHP script to create Google Authenticator secrets and corresponding QR codes, then verify the entered response over a given time variance.</p>
 		<p>
 			<a class="button rounded display-inline-block background-white color-belize-hole" href="authenticatron">Demo</a>
 			<a class="button rounded display-inline-block background-white color-belize-hole" href="https://github.com/eustasy/authenticatron">GitHub</a>
@@ -62,17 +61,17 @@ then verify the entered response over a given time variance.</p>
 
 <section class="whole grid">
 	<div class="whole smablet-half">
+		<h3>jQuery.leanModal2</h3>
+		<p class="text-left TODO">jQuery.jQuery.leanModal2</p>
+		<p>
+			<a class="button rounded display-inline-block background-white color-belize-hole" href="https://eustasy.github.io/jQuery.leanModal2/">Demo</a>
+			<a class="button rounded display-inline-block background-white color-belize-hole" href="https://github.com/eustasy/jQuery.leanModal2">GitHub</a>
+		</p>
+	</div>
+	<div class="whole smablet-half">
 		<a href="jQuery.leanModal2" title="jQuery.leanModal2">
 			<img alt="jQuery.leanModal2" src="assets/images/jquery-leanmodal2.png">
 		</a>
-	</div>
-	<div class="whole smablet-half">
-		<h3>jQuery.leanModal2</h3>
-		<p class="text-left TODOery.equalize is a small jQuery plugin to equalize the height of elements with the equalize class within groups, or the entire page. It is open-sourced by eustasy under the MIT License, and the minified version is only 1.8KB in size.</p>
-		<p>
-			<a class="button rounded display-inline-block background-white color-belize-hole" href="jQuery.leanModal2">Demo</a>
-			<a class="button rounded display-inline-block background-white color-belize-hole" href="https://github.com/eustasy/jQuery.leanModal2">GitHub</a>
-		</p>
 	</div>
 </section>
 
