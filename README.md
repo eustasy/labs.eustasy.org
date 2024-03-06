@@ -7,4 +7,6 @@
 
 ```bash
 git pull --recurse
+git submodule init
+git submodule update
 ```
