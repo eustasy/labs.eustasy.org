@@ -25,7 +25,7 @@
 
 <section class="whole grid">
 	<div class="whole smablet-half float-right">
-		<a href="authenticatron" title="Authenticatron">
+		<a href="https://authenticatron.eustasy.org/" title="Authenticatron">
 			<img alt="Authenticatron" src="assets/images/authenticatron.png">
 		</a>
 	</div>
@@ -33,7 +33,7 @@
 		<h3>Authenticatron</h3>
 		<p class="text-left">Authenticatron is a simple, procedural PHP script to create Google Authenticator secrets and corresponding QR codes, then verify the entered response over a given time variance.</p>
 		<p>
-			<a class="button rounded display-inline-block background-white color-belize-hole" href="authenticatron">Demo</a>
+			<a class="button rounded display-inline-block background-white color-belize-hole" href="https://authenticatron.eustasy.org/">Demo</a>
 			<a class="button rounded display-inline-block background-white color-belize-hole" href="https://github.com/eustasy/authenticatron">GitHub</a>
 		</p>
 	</div>
