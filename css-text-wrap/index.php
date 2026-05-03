@@ -1,20 +1,4 @@
-<!DocType html>
-<html>
-	<head>
-
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta http-equiv="cleartype" content="on">
-		<meta name="HandheldFriendly" content="True">
-		<meta name="MobileOptimized" content="320">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-
-		<title>CSS Shapes for Wrapping Text &nbsp;&middot;&nbsp; eustasy Labs</title>
-
-		<link rel="icon" href="https://labs.eustasy.org/favicon.ico">
-		<link rel="shortcut icon" href="https://labs.eustasy.org/favicon.ico">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300|Open+Sans:300|Nunito:300,400">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/eustasy/Colors.css@1/colors.min.css,gh/necolas/normalize.css@8/normalize.min.css">
+<?php include __DIR__.'/../_templates/header.php'; ?>
 
 		<style>
 			h1 { font: 300 3em/1 'Lato', sans-serif; text-transform: uppercase; margin-bottom: -.5rem; }
@@ -30,17 +14,6 @@
 			a:hover { text-decoration: underline; }
 			@media screen and (min-width: 80rem) { body { padding-left: 30vw; } }
 		</style>
-
-		<script src="https://cdn.jsdelivr.net/combine/gh/LeaVerou/prefixfree@1/prefixfree.min.js,gh/chuckcarpenter/REM-unit-polyfill@1/js/rem.min.js"></script>
-
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-45667989-11', 'eustasy.org');
-			ga('send', 'pageview');
-		</script>
 
 	</head>
 	<body>
