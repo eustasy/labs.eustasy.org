@@ -1,0 +1,40 @@
+name: Refresh repos data
+
+on:
+  schedule:
+    # Daily at 06:00 UTC. Repo metadata (stars, languages, descriptions) is
+    # slow-moving — once a day is plenty.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-repos
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: Fetch repos
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bun run fetch:repos
+      - name: Commit if changed
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/data/repos.json
+          if git diff --staged --quiet; then
+            echo "No repo changes."
+          else
+            git commit -m "chore(data): refresh repos snapshot"
+            git push
+          fi

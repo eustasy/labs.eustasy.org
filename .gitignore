@@ -1,2 +1,16 @@
 *custom*
 *~
+
+# Astro / Node
+node_modules/
+dist/
+.astro/
+
+# Editor
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+*.log
+bun.lockb

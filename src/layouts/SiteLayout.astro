@@ -1,0 +1,175 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  activeNav?: 'products' | 'open-source' | 'community' | 'choices' | null;
+  footer?: 'full' | 'compact';
+  bodyDataScreen?: string;
+}
+
+const {
+  title,
+  description = 'Quiet infrastructure for the vanilla web. Small studio shipping open-source tooling and a handful of paid products.',
+  activeNav = null,
+  footer = 'full',
+  bodyDataScreen,
+} = Astro.props;
+
+import '../styles/flexoki.css';
+import '../styles/reset.css';
+import '../styles/typography.css';
+import '../styles/button.css';
+import '../styles/badge.css';
+import '../styles/card.css';
+import '../styles/site.css';
+---
+<!doctype html>
+<html lang="en" class="theme-light">
+<head>
+<meta charset="utf-8" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script is:inline>
+  (function () {
+    var html = document.documentElement;
+    var stored = localStorage.getItem('eustasy-theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var useDark = stored ? stored === 'dark' : prefersDark;
+    if (useDark) html.classList.replace('theme-light', 'theme-dark');
+  })();
+</script>
+</head>
+<body data-screen-label={bodyDataScreen}>
+  <header class="site-header">
+    <div class="container row">
+      <a href="/" class="brand" aria-label="eustasy home">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="13.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+          <path d="M5.5 17 q3.5 -4 7 0 t7 0 q1.8 -2 3.5 -1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+        <span class="word">eustasy</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/#products" class={`nav-link${activeNav === 'products' ? ' active' : ''}`}>Products</a>
+        <a href="/open-source" class={`nav-link${activeNav === 'open-source' ? ' active' : ''}`}>Open source</a>
+        <a href="/#community" class={`nav-link${activeNav === 'community' ? ' active' : ''}`}>Community</a>
+        <a href="https://github.com/eustasy/.choices" class={`nav-link${activeNav === 'choices' ? ' active' : ''}`}>Choices</a>
+        <a href="https://github.com/eustasy" class="gh">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.3-1.4-1.7-1.4-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.4 3.6 1 .1-.8.4-1.4.8-1.7-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.4-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.9 5.7-5.6 6 .5.4.9 1.1.9 2.3v3.4c0 .3.2.7.8.6A12 12 0 0 0 12 .3" />
+          </svg>
+          GitHub
+        </a>
+        <button class="theme-toggle" aria-label="Toggle theme" id="theme-toggle">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  {footer === 'full' ? (
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="/" class="brand">
+              <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+                <circle cx="16" cy="16" r="13.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+                <path d="M5.5 17 q3.5 -4 7 0 t7 0 q1.8 -2 3.5 -1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+              <span class="word">eustasy</span>
+            </a>
+            <p class="footer-tagline">Quiet infrastructure for the vanilla web. Built in the UK since 2014.</p>
+          </div>
+
+          <div class="footer-col">
+            <h4>Products</h4>
+            <ul>
+              <li><a href="#">Ashrise A1</a></li>
+              <li><a href="#">Ashrise P2</a></li>
+              <li><a href="#">Ashrise L3</a></li>
+              <li><a href="#">Puff Serverless</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">Status<span class="ext">99.97%</span></a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Open source</h4>
+            <ul>
+              <li><a href="https://github.com/eustasy/.ui">.ui<span class="ext">v3.2</span></a></li>
+              <li><a href="https://github.com/eustasy/Bubbly">Bubbly</a></li>
+              <li><a href="https://github.com/eustasy/Colors.css">Colors.css</a></li>
+              <li><a href="https://github.com/eustasy/browning">Browning</a></li>
+              <li><a href="https://github.com/eustasy/Locksmith">Locksmith</a></li>
+              <li><a href="https://github.com/eustasy/Phoenix">Phoenix</a></li>
+              <li><a href="https://github.com/eustasy">All repos →</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Org</h4>
+            <ul>
+              <li><a href="https://github.com/eustasy/.choices">.choices</a></li>
+              <li><a href="https://github.com/orgs/eustasy/discussions">Discussions</a></li>
+              <li><a href="https://github.com/sponsors/eustasy">Sponsor</a></li>
+              <li><a href="https://labs.eustasy.org">labs.eustasy.org<span class="ext">↗</span></a></li>
+              <li><a href="#">Press kit</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© eustasy 2014–2026 · MIT licensed where it can be · Built with .ui</span>
+          <span><a href="https://github.com/eustasy">github.com/eustasy</a></span>
+        </div>
+      </div>
+    </footer>
+  ) : (
+    <footer class="site-footer compact">
+      <div class="container row">
+        <span>© eustasy 2014–2026 · MIT licensed where it can be</span>
+        <span><a href="https://github.com/eustasy">github.com/eustasy</a></span>
+      </div>
+    </footer>
+  )}
+
+  <script is:inline>
+    (function () {
+      var html = document.documentElement;
+      var btn = document.getElementById('theme-toggle');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var isDark = html.classList.contains('theme-dark');
+          html.classList.toggle('theme-dark', !isDark);
+          html.classList.toggle('theme-light', isDark);
+          localStorage.setItem('eustasy-theme', isDark ? 'light' : 'dark');
+        });
+      }
+      if (window.matchMedia) {
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        var follow = function (e) {
+          if (localStorage.getItem('eustasy-theme')) return;
+          html.classList.toggle('theme-dark', e.matches);
+          html.classList.toggle('theme-light', !e.matches);
+        };
+        if (mq.addEventListener) mq.addEventListener('change', follow);
+        else if (mq.addListener) mq.addListener(follow);
+      }
+    })();
+  </script>
+</body>
+</html>

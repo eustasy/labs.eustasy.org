@@ -1,0 +1,40 @@
+name: Refresh discussions data
+
+on:
+  schedule:
+    # Every 2 hours, offset 30 min from refresh-commits to avoid
+    # interleaved git pushes racing each other.
+    - cron: '30 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-discussions
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: Fetch discussions & issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bun run fetch:discussions
+      - name: Commit if changed
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/data/discussions.json
+          if git diff --staged --quiet; then
+            echo "No discussion changes."
+          else
+            git commit -m "chore(data): refresh discussions snapshot"
+            git push
+          fi

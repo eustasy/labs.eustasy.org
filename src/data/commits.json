@@ -1,0 +1,42 @@
+[
+  {
+    "type": "release",
+    "title": ".ui v3.2.1 — fix focus ring offset on switch component",
+    "repo": ".ui",
+    "meta": "Lewis Goddard",
+    "time": "2h",
+    "url": "https://github.com/eustasy/.ui/releases"
+  },
+  {
+    "type": "commit",
+    "title": "drop redundant -webkit-mask fallback now Safari 16+ is baseline",
+    "repo": ".ui",
+    "meta": "main",
+    "time": "5h",
+    "url": "https://github.com/eustasy/.ui/commits/main"
+  },
+  {
+    "type": "commit",
+    "title": "Bubbly: bump certbot to 2.11, drop deprecated --renew-hook",
+    "repo": "Bubbly",
+    "meta": "main",
+    "time": "1d",
+    "url": "https://github.com/eustasy/Bubbly/commits/main"
+  },
+  {
+    "type": "release",
+    "title": "puff-server v0.4.0-alpha — multi-org billing scaffolding",
+    "repo": "puff-server",
+    "meta": "Lewis Goddard",
+    "time": "2d",
+    "url": "https://github.com/eustasy/puff-server/releases"
+  },
+  {
+    "type": "commit",
+    "title": "Locksmith: add macOS notarisation to release pipeline",
+    "repo": "Locksmith",
+    "meta": "main",
+    "time": "3d",
+    "url": "https://github.com/eustasy/Locksmith/commits/main"
+  }
+]

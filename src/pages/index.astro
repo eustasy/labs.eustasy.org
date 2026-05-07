@@ -1,0 +1,986 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import reposData from '../data/repos.json';
+import commits from '../data/commits.json';
+import discussions from '../data/discussions.json';
+
+type Repo = (typeof reposData)[number];
+
+const FEATURED_NAMES = ['.ui', 'Bubbly', 'Phoenix', 'Colors.css', 'browning', 'Locksmith'];
+const repos: Repo[] = reposData;
+const featured: Repo[] = FEATURED_NAMES
+  .map((name) => repos.find((r) => r.name === name))
+  .filter((r): r is Repo => Boolean(r));
+
+const publicRepos = repos.filter((r) => !r.meta).length;
+const yearsShipping = `${new Date().getFullYear() - 2014} yrs`;
+
+const TYPE_LABEL: Record<string, string> = {
+  css: 'CSS-LIB',
+  bash: 'BASH',
+  php: 'PHP-LIB',
+  python: 'PYTHON',
+  js: 'JS-LIB',
+  jq: 'JQUERY',
+  html: 'STATIC',
+  meta: 'META',
+};
+
+function shortTime(days: number) {
+  if (days < 7) return `${days}d`;
+  if (days < 60) return `${Math.round(days / 7)}w`;
+  if (days < 365) return `${Math.round(days / 30)}mo`;
+  return `${Math.round(days / 365)}y`;
+}
+---
+<SiteLayout
+  title="eustasy — quiet infrastructure, vanilla web"
+  bodyDataScreen="01 Home"
+>
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">
+          <span class="dot" aria-hidden="true"></span>
+          puff‑server is now in alpha
+        </span>
+        <h1>Quiet infrastructure for the <em>vanilla web</em>.</h1>
+        <p class="lead">eustasy is a small studio building open‑source tooling, libraries and configuration packs &mdash; and a handful of paid products that pay for the rest. HTML, CSS, and absolutely minimal JavaScript.</p>
+        <div class="actions">
+          <a href="#products" class="btn btn-primary btn-lg">See the products</a>
+          <a href="#open-source" class="btn btn-outline btn-lg">Browse the libraries →</a>
+        </div>
+        <div class="stats" role="list">
+          <div class="stat" role="listitem"><span class="n">{publicRepos}</span><span class="l">Public repos</span></div>
+          <div class="stat" role="listitem"><span class="n">{yearsShipping}</span><span class="l">Shipping</span></div>
+          <div class="stat" role="listitem"><span class="n">MIT</span><span class="l">Licence default</span></div>
+          <div class="stat" role="listitem"><span class="n">0</span><span class="l">Frameworks</span></div>
+        </div>
+      </div>
+
+      <div class="hero-mark" aria-hidden="true">
+        <div class="ring"></div>
+        <div class="ring ring-2"></div>
+        <svg class="wave-svg" viewBox="0 0 200 200">
+          <circle class="circle" cx="100" cy="100" r="92" />
+          <path class="wave" d="M28 110 C 52 78, 76 78, 100 110 S 148 142, 172 110 C 178 102, 182 98, 184 96" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Products ===== -->
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow"><span class="num">01 /</span> <span>Paid products</span> <span class="rule"></span></div>
+          <h2>Software we charge for, so the rest can stay free.</h2>
+          <p class="section-sub">Four products, one purpose: keep small teams running on infrastructure they actually understand. No seat haggling, no opaque "Enterprise" tiers.</p>
+        </div>
+        <aside class="section-aside">All products are self‑hostable. Hosted plans exist because someone has to pay for the tin.</aside>
+      </div>
+
+      <div class="products-grid">
+        <article class="product-card feature">
+          <div class="product-row-1">
+            <h3 class="product-name"><span class="glyph">A</span>Ashrise</h3>
+            <span class="product-tag">Flagship · 3 tiers</span>
+          </div>
+          <p class="product-desc">A quiet, calendar‑aware project tracker for studios that don't want to live in a chat app. Sync GitHub issues, plan blocks of work, leave at six.</p>
+
+          <div class="product-illust">
+            <svg viewBox="0 0 800 110" preserveAspectRatio="none">
+              <defs>
+                <pattern id="dotg" width="14" height="14" patternUnits="userSpaceOnUse">
+                  <circle cx="1" cy="1" r="1" fill="currentColor" opacity="0.18" />
+                </pattern>
+              </defs>
+              <rect width="800" height="110" fill="url(#dotg)" />
+              <path d="M0 80 Q 100 40 200 60 T 400 50 T 600 70 T 800 40" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
+              <path d="M0 95 Q 100 60 200 80 T 400 65 T 600 85 T 800 55" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.65" />
+              <path d="M0 105 Q 100 80 200 95 T 400 80 T 600 100 T 800 70" fill="none" stroke="currentColor" stroke-width="1.6" opacity="0.95" />
+            </svg>
+          </div>
+
+          <div class="product-meta">
+            <span class="price">A1 — £8 / mo</span>
+            <span>·</span>
+            <span>P2 — £24 / seat</span>
+            <span>·</span>
+            <span>L3 — £96 / team</span>
+          </div>
+          <a href="#" class="product-cta">View Ashrise tiers
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+        </article>
+
+        <article class="product-card">
+          <div class="product-row-1">
+            <h3 class="product-name"><span class="glyph">P</span>Puff Serverless</h3>
+            <span class="product-tag">Alpha</span>
+          </div>
+          <p class="product-desc">Centralised sign‑on, access control and unified billing for multiple organisations &mdash; without spinning up a server. The companion to <code class="mono">puff-server</code>.</p>
+          <div class="product-meta">
+            <span class="price">£12 / org / mo</span>
+            <span>·</span>
+            <span>self‑host free</span>
+          </div>
+          <a href="#" class="product-cta">Join the alpha
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+        </article>
+
+        <article class="product-card">
+          <div class="product-row-1">
+            <h3 class="product-name"><span class="glyph">·</span>Something small, next</h3>
+            <span class="product-tag">Soon</span>
+          </div>
+          <p class="product-desc">A configuration pack for personal cloud setups &mdash; the bits we keep rebuilding for every new server. Drops Q3.</p>
+          <div class="product-meta">
+            <span>under construction</span>
+          </div>
+          <a href="#" class="product-cta">Get notified
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Open source ===== -->
+  <section class="section" id="open-source">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow"><span class="num">02 /</span> <span>Open source</span> <span class="rule"></span></div>
+          <h2>The libraries doing the actual work.</h2>
+          <p class="section-sub">All MIT, all vanilla. Drop‑in. Each component or library works independently &mdash; copy the file, link it, done.</p>
+        </div>
+        <aside class="section-aside">Repository descriptions follow the <code>TYPE:</code> convention. <code>EOL:</code> means it's done; <code>DEPRECATED:</code> means we'd suggest something else now.</aside>
+      </div>
+
+      <div class="repo-grid">
+        {featured.map((repo) => (
+          <a class="repo" href={repo.url}>
+            <div class="repo-head">
+              <h3 class="repo-name">{repo.name}</h3>
+              <span class={`repo-type ${repo.primaryLang}`}>{TYPE_LABEL[repo.primaryLang] ?? 'REPO'}</span>
+            </div>
+            <p class="repo-desc">{repo.desc}</p>
+            <div class="repo-meta">
+              <span>★ {repo.stars}</span>
+              <span>{repo.version ?? repo.status}</span>
+              <span>updated {shortTime(repo.updated)}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <p class="browse-all">{repos.filter((r) => !r.meta).length - featured.length} more in the org. <a href="/open-source">See the full searchable index →</a></p>
+    </div>
+  </section>
+
+  <!-- ===== Activity ===== -->
+  <section class="section" id="activity">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow"><span class="num">03 /</span> <span>Recently</span> <span class="rule"></span></div>
+          <h2>What's actually moving.</h2>
+          <p class="section-sub">A live read of commits, releases, and discussions across the org. Nothing curated &mdash; just the GitHub firehose, slowed down.</p>
+        </div>
+        <aside class="section-aside">Pulled directly from the GitHub Events API. Refreshes every couple of hours.</aside>
+      </div>
+
+      <div class="activity-grid">
+        <div class="activity-col">
+          <h3>Commits &amp; releases</h3>
+          <ul class="activity-list">
+            {commits.map((item) => (
+              <a class={`activity-item ${item.type}`} href={item.url}>
+                <span class="activity-icon" aria-hidden="true">
+                  {item.type === 'release' ? (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-8 8-4-4" /><circle cx="12" cy="12" r="10" /></svg>
+                  ) : (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M2 12h6M16 12h6" /></svg>
+                  )}
+                </span>
+                <div class="activity-body">
+                  <p class="activity-title">{item.title}</p>
+                  <div class="activity-meta"><span class="repo">{item.repo}</span><span>·</span><span>{item.meta}</span></div>
+                </div>
+                <span class="activity-time">{item.time}</span>
+              </a>
+            ))}
+          </ul>
+        </div>
+
+        <div class="activity-col">
+          <h3>Discussions &amp; issues</h3>
+          <ul class="activity-list">
+            {discussions.map((item) => (
+              <a class={`activity-item ${item.type}`} href={item.url}>
+                <span class="activity-icon" aria-hidden="true">
+                  {item.type === 'discussion' ? (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                  ) : (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" /><path d="M12 8v4M12 16h.01" /></svg>
+                  )}
+                </span>
+                <div class="activity-body">
+                  <p class="activity-title">{item.title}</p>
+                  <div class="activity-meta"><span class="repo">{item.repo}</span><span>·</span><span>{item.meta}</span></div>
+                </div>
+                <span class="activity-time">{item.time}</span>
+              </a>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Community ===== -->
+  <section class="section" id="community">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow"><span class="num">04 /</span> <span>Community</span> <span class="rule"></span></div>
+          <h2>Help keep the lights on, or just lurk &mdash; both are fine.</h2>
+          <p class="section-sub">eustasy is funded by the paid products and a handful of generous sponsors. There's no Discord; conversations live on GitHub Discussions where they can be searched five years from now.</p>
+        </div>
+      </div>
+
+      <div class="community-grid">
+        <div class="community-card sponsor">
+          <h3>Sponsor the work</h3>
+          <p>Most of what we ship is given away. If <code>.ui</code> or <code>Bubbly</code> saved you an afternoon, a recurring sponsorship keeps the rest coming.</p>
+          <div class="sponsor-tiers">
+            <div class="sponsor-tier"><span class="price">£3</span><span class="lbl">a month</span></div>
+            <div class="sponsor-tier"><span class="price">£12</span><span class="lbl">a month</span></div>
+            <div class="sponsor-tier"><span class="price">£40</span><span class="lbl">a month</span></div>
+          </div>
+          <div class="actions">
+            <a href="https://github.com/sponsors/eustasy" class="btn btn-primary">Sponsor on GitHub</a>
+            <a href="#" class="btn btn-outline">One-off via Stripe</a>
+          </div>
+        </div>
+
+        <div class="community-card">
+          <h3>Discussions</h3>
+          <p>Questions, show‑and‑tell, the occasional polite disagreement about CSS specificity. Open to anyone with a GitHub account.</p>
+          <ul class="discussions-list">
+            {discussions.filter((d) => d.type === 'discussion').slice(0, 4).map((d) => (
+              <a class="discussion-item" href={d.url}>
+                <span class="count">{d.meta.replace(/[^0-9]/g, '') || '–'}</span>
+                <span class="title">{d.title}</span>
+                <span class="repo-tag">{d.repo}</span>
+              </a>
+            ))}
+          </ul>
+          <div class="actions">
+            <a href="https://github.com/orgs/eustasy/discussions" class="btn btn-outline">Open Discussions →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>
+
+<style is:global>
+  /* ============ Hero ============ */
+  .hero {
+    padding-block: calc(96px * var(--site-density)) calc(80px * var(--site-density));
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 920px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-mark { order: -1; max-width: 280px; }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    margin-bottom: 22px;
+    padding: 4px 10px 4px 4px;
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    background: var(--color-surface-raised);
+  }
+  .eyebrow .dot {
+    width: 18px; height: 18px;
+    border-radius: 100px;
+    background: var(--flexoki-green-100);
+    display: grid; place-items: center;
+    color: var(--flexoki-green-700);
+    font-size: 10px;
+  }
+  html.theme-dark .eyebrow .dot {
+    background: var(--flexoki-green-950);
+    color: var(--flexoki-green-300);
+  }
+  .eyebrow .dot::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: currentColor;
+    border-radius: 100px;
+    box-shadow: 0 0 0 0 currentColor;
+    animation: pulse 2.4s var(--easing) infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+    50% { box-shadow: 0 0 0 4px transparent; opacity: 0.55; }
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    margin: 0 0 22px;
+    font-weight: 600;
+    text-wrap: balance;
+    max-width: 14ch;
+  }
+  .hero h1 em {
+    font-style: normal;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--site-accent);
+    background: var(--site-accent-bg);
+    padding: 0 8px;
+    border-radius: 4px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .hero .lead {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+    max-width: 46ch;
+    margin: 0 0 32px;
+  }
+  .hero .actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .hero .stats {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    padding-top: 22px;
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .hero .stats .stat { display: flex; flex-direction: column; gap: 2px; }
+  .hero .stats .stat .n { color: var(--color-text); font-size: 20px; font-weight: 500; letter-spacing: -0.01em; }
+  .hero .stats .stat .l { color: var(--color-text-tertiary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Animated wave mark */
+  .hero-mark {
+    position: relative;
+    aspect-ratio: 1;
+    width: 100%;
+    max-width: 420px;
+    justify-self: end;
+  }
+  @media (max-width: 920px) { .hero-mark { justify-self: start; } }
+  .hero-mark .ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px dashed var(--color-border);
+    animation: rotate 60s linear infinite;
+  }
+  .hero-mark .ring::after {
+    content: "";
+    position: absolute;
+    top: -3px; left: 50%;
+    width: 6px; height: 6px;
+    background: var(--site-accent);
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+  @keyframes rotate { to { transform: rotate(360deg); } }
+  .hero-mark .ring-2 {
+    inset: 8%;
+    border-style: solid;
+    border-color: var(--color-border);
+    animation: none;
+  }
+  .hero-mark .wave-svg {
+    position: absolute;
+    inset: 16%;
+    width: 68%;
+    height: 68%;
+  }
+  .hero-mark .wave-svg .circle {
+    fill: none;
+    stroke: var(--color-text);
+    stroke-width: 4;
+  }
+  .hero-mark .wave-svg .wave {
+    fill: none;
+    stroke: var(--color-text);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: drawWave 3.2s var(--easing) 0.3s forwards, breathe 6s var(--easing) 3.5s infinite;
+  }
+  @keyframes drawWave { to { stroke-dashoffset: 0; } }
+  @keyframes breathe {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-mark .ring, .hero-mark .wave-svg .wave, .eyebrow .dot::before {
+      animation: none !important;
+    }
+    .hero-mark .wave-svg .wave { stroke-dashoffset: 0; }
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(0deg, transparent 0 87px, var(--color-border) 87px 88px);
+    opacity: 0.35;
+    mask-image: radial-gradient(circle at 80% 50%, black 0%, transparent 65%);
+    -webkit-mask-image: radial-gradient(circle at 80% 50%, black 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* ============ Section base ============ */
+  .section {
+    padding-block: calc(96px * var(--site-density));
+    border-top: 1px solid var(--color-border);
+    position: relative;
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 48px;
+    margin-bottom: 56px;
+    align-items: end;
+  }
+  @media (max-width: 720px) {
+    .section-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 36px; }
+  }
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .section-eyebrow .num { color: var(--site-accent); }
+  .section-eyebrow .rule { flex: 1; height: 1px; background: var(--color-border); }
+  .section h2 {
+    margin: 0 0 12px;
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  .section .section-sub {
+    color: var(--color-text-secondary);
+    font-size: 17px;
+    line-height: 1.55;
+    max-width: 50ch;
+    margin: 0;
+  }
+  .section-aside {
+    color: var(--color-text-tertiary);
+    font-size: 14px;
+    line-height: 1.6;
+    font-family: var(--font-mono);
+    border-inline-start: 2px solid var(--color-border);
+    padding-inline-start: 16px;
+  }
+
+  /* ============ Products ============ */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 860px) { .products-grid { grid-template-columns: 1fr; } }
+
+  .product-card {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: box-shadow var(--duration-normal) var(--easing),
+                border-color var(--duration-normal) var(--easing),
+                transform var(--duration-normal) var(--easing);
+    overflow: hidden;
+  }
+  .product-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-hover);
+  }
+  .product-card.feature {
+    grid-column: span 2;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+  }
+  @media (max-width: 860px) { .product-card.feature { grid-column: span 1; } }
+  .product-card.feature .product-name { color: var(--color-bg); }
+  .product-card.feature .product-desc { color: color-mix(in oklch, var(--color-bg), transparent 30%); }
+  .product-card.feature .product-meta { color: color-mix(in oklch, var(--color-bg), transparent 50%); }
+  .product-card.feature .product-cta { color: var(--color-bg); border-color: color-mix(in oklch, var(--color-bg), transparent 70%); }
+  .product-card.feature .product-cta:hover { background: color-mix(in oklch, var(--color-bg), transparent 90%); }
+  .product-card.feature .product-illust { opacity: 0.92; }
+
+  .product-row-1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .product-name {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .product-name .glyph {
+    width: 28px; height: 28px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+    background: var(--site-accent-bg);
+    color: var(--site-accent);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .product-card.feature .product-name .glyph {
+    background: color-mix(in oklch, var(--color-bg), transparent 85%);
+    color: var(--color-bg);
+  }
+  .product-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-tertiary);
+    padding: 4px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    flex-shrink: 0;
+  }
+  .product-card.feature .product-tag {
+    color: color-mix(in oklch, var(--color-bg), transparent 30%);
+    border-color: color-mix(in oklch, var(--color-bg), transparent 70%);
+  }
+  .product-desc {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .product-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .product-meta .price { color: var(--color-text); font-weight: 500; }
+  .product-card.feature .product-meta .price { color: var(--color-bg); }
+  .product-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 10px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 500;
+    align-self: flex-start;
+    background: transparent;
+    transition: background var(--duration-fast) var(--easing);
+  }
+  .product-cta:hover { background: var(--color-surface-raised); }
+  .product-cta svg { transition: transform var(--duration-normal) var(--easing); }
+  .product-cta:hover svg { transform: translateX(2px); }
+
+  .product-illust {
+    position: relative;
+    height: 110px;
+    margin: 8px -32px -8px;
+  }
+  .product-illust svg { width: 100%; height: 100%; display: block; }
+
+  /* ============ Open source grid ============ */
+  .repo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    overflow: hidden;
+  }
+  @media (max-width: 920px) { .repo-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .repo-grid { grid-template-columns: 1fr; } }
+
+  .repo-grid .repo {
+    padding: 24px 24px 22px;
+    border-inline-end: 1px solid var(--color-border);
+    border-block-end: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: background var(--duration-fast) var(--easing);
+    position: relative;
+  }
+  .repo-grid .repo:hover { background: var(--color-surface-raised); }
+  .repo-grid .repo:hover .repo-name::after {
+    transform: translateX(3px);
+    opacity: 1;
+  }
+  @media (min-width: 920px) {
+    .repo-grid .repo:nth-child(3n) { border-inline-end: none; }
+    .repo-grid .repo:nth-last-child(-n+3):nth-child(3n+1),
+    .repo-grid .repo:nth-last-child(-n+3):nth-child(3n+1) ~ .repo {
+      border-block-end: none;
+    }
+  }
+  @media (max-width: 919px) and (min-width: 600px) {
+    .repo-grid .repo:nth-child(2n) { border-inline-end: none; }
+  }
+  @media (max-width: 599px) {
+    .repo-grid .repo { border-inline-end: none; }
+    .repo-grid .repo:last-child { border-block-end: none; }
+  }
+
+  .repo-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .repo-grid .repo-name {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .repo-grid .repo-name::after {
+    content: "→";
+    font-family: var(--font-body);
+    color: var(--color-text-tertiary);
+    opacity: 0;
+    transition: all var(--duration-normal) var(--easing);
+  }
+  .repo-type {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 7px;
+    border-radius: 3px;
+  }
+  .repo-type.css   { background: var(--flexoki-cyan-50);    color: var(--flexoki-cyan-700); }
+  .repo-type.bash  { background: var(--flexoki-yellow-50);  color: var(--flexoki-yellow-700); }
+  .repo-type.php   { background: var(--flexoki-purple-50);  color: var(--flexoki-purple-700); }
+  .repo-type.python{ background: var(--flexoki-blue-50);    color: var(--flexoki-blue-700); }
+  .repo-type.js    { background: var(--flexoki-magenta-50); color: var(--flexoki-magenta-700); }
+  .repo-type.jq    { background: var(--flexoki-magenta-50); color: var(--flexoki-magenta-700); }
+  .repo-type.html  { background: var(--flexoki-orange-50);  color: var(--flexoki-orange-700); }
+  .repo-type.meta  { background: var(--flexoki-50);         color: var(--flexoki-700); }
+  .repo-type.alpha { background: var(--flexoki-orange-50);  color: var(--flexoki-orange-700); }
+  html.theme-dark .repo-type.css   { background: var(--flexoki-cyan-950);    color: var(--flexoki-cyan-300); }
+  html.theme-dark .repo-type.bash  { background: var(--flexoki-yellow-950);  color: var(--flexoki-yellow-300); }
+  html.theme-dark .repo-type.php   { background: var(--flexoki-purple-950);  color: var(--flexoki-purple-300); }
+  html.theme-dark .repo-type.python{ background: var(--flexoki-blue-950);    color: var(--flexoki-blue-300); }
+  html.theme-dark .repo-type.js    { background: var(--flexoki-magenta-950); color: var(--flexoki-magenta-300); }
+  html.theme-dark .repo-type.jq    { background: var(--flexoki-magenta-950); color: var(--flexoki-magenta-300); }
+  html.theme-dark .repo-type.html  { background: var(--flexoki-orange-950);  color: var(--flexoki-orange-300); }
+  html.theme-dark .repo-type.meta  { background: var(--flexoki-900);         color: var(--flexoki-300); }
+  html.theme-dark .repo-type.alpha { background: var(--flexoki-orange-950);  color: var(--flexoki-orange-300); }
+
+  .repo-desc {
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+  }
+  .repo-grid .repo-meta {
+    display: flex;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    margin-top: 4px;
+  }
+  .repo-grid .repo-meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+  .browse-all {
+    margin-top: 24px;
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+  }
+  .browse-all a { color: var(--site-accent); }
+
+  /* ============ Activity feed ============ */
+  .activity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 860px) { .activity-grid { grid-template-columns: 1fr; } }
+
+  .activity-col h3 {
+    margin: 0 0 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .activity-col h3::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--site-accent);
+    border-radius: 100px;
+  }
+
+  .activity-list {
+    list-style: none;
+    margin: 0; padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+  .activity-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--color-border);
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+    transition: background var(--duration-fast) var(--easing);
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-item:hover { background: var(--color-surface-raised); }
+  .activity-icon {
+    width: 28px; height: 28px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: var(--color-surface-raised);
+    color: var(--color-text-secondary);
+    display: grid; place-items: center;
+  }
+  .activity-item.commit .activity-icon { background: var(--flexoki-green-50); color: var(--flexoki-green-700); }
+  .activity-item.release .activity-icon { background: var(--flexoki-blue-50); color: var(--flexoki-blue-700); }
+  .activity-item.discussion .activity-icon { background: var(--flexoki-purple-50); color: var(--flexoki-purple-700); }
+  .activity-item.issue .activity-icon { background: var(--flexoki-orange-50); color: var(--flexoki-orange-700); }
+  html.theme-dark .activity-item.commit .activity-icon { background: var(--flexoki-green-950); color: var(--flexoki-green-300); }
+  html.theme-dark .activity-item.release .activity-icon { background: var(--flexoki-blue-950); color: var(--flexoki-blue-300); }
+  html.theme-dark .activity-item.discussion .activity-icon { background: var(--flexoki-purple-950); color: var(--flexoki-purple-300); }
+  html.theme-dark .activity-item.issue .activity-icon { background: var(--flexoki-orange-950); color: var(--flexoki-orange-300); }
+
+  .activity-body { min-width: 0; }
+  .activity-title {
+    margin: 0 0 4px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .activity-meta {
+    display: flex;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+  }
+  .activity-meta .repo { color: var(--site-accent); }
+  .activity-time {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* ============ Community ============ */
+  .community-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+  }
+  @media (max-width: 920px) { .community-grid { grid-template-columns: 1fr; } }
+
+  .community-card {
+    padding: 36px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .community-card.sponsor {
+    background:
+      radial-gradient(circle at 100% 0%, var(--flexoki-magenta-50) 0%, transparent 50%),
+      radial-gradient(circle at 0% 100%, var(--flexoki-cyan-50) 0%, transparent 50%),
+      var(--color-surface);
+    border: 1px solid var(--color-text);
+  }
+  html.theme-dark .community-card.sponsor {
+    background:
+      radial-gradient(circle at 100% 0%, var(--flexoki-magenta-950) 0%, transparent 50%),
+      radial-gradient(circle at 0% 100%, var(--flexoki-cyan-950) 0%, transparent 50%),
+      var(--color-surface);
+    border-color: var(--color-border);
+  }
+  .community-card h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  .community-card p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: 50ch;
+  }
+  .community-card .actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .sponsor-tiers {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .sponsor-tier {
+    flex: 1;
+    padding: 12px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .sponsor-tier .price {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--color-text);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .sponsor-tier .lbl {
+    color: var(--color-text-tertiary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .discussions-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .discussion-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+  }
+  .discussion-item:last-child { border-bottom: none; }
+  .discussion-item .count {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .discussion-item .title {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .discussion-item .repo-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    flex-shrink: 0;
+  }
+  .discussion-item:hover .title { color: var(--site-accent); }
+</style>

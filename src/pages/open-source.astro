@@ -1,0 +1,631 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import repos from '../data/repos.json';
+---
+<SiteLayout
+  title="Open source — eustasy"
+  description="Every eustasy repository in one searchable index — filterable by language and status."
+  activeNav="open-source"
+  footer="compact"
+  bodyDataScreen="02 Open Source"
+>
+  <section class="page-head">
+    <div class="container">
+      <div class="page-eyebrow"><span class="num">02 /</span> Open source</div>
+      <h1>Every repo, in one searchable <em>index</em>.</h1>
+      <p class="lead">Twenty‑plus libraries, configuration packs, and small sites under <code class="mono">github.com/eustasy</code>. Filter by language, status, or just type a few letters &mdash; the page filters as you go.</p>
+      <div class="convention">Repository descriptions follow a <code>TYPE: …</code> convention. <code>EOL:</code> means it's done; <code>DEPRECATED:</code> means there's a better option now; <code>ALPHA:</code> means tread carefully.</div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="container row">
+      <div class="search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" /><path d="M21 21l-4.5-4.5" />
+        </svg>
+        <input type="search" id="search" placeholder="Search repos by name or description…" aria-label="Search repositories" autocomplete="off" />
+        <span class="kbd" aria-hidden="true">/</span>
+      </div>
+      <span class="toolbar-stats" aria-live="polite"><span class="n" id="visible-count">0</span> of <span id="total-count">0</span> repos</span>
+      <label class="sort-select">
+        <span style="color:var(--color-text-tertiary);font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.06em">Sort</span>
+        <select id="sort">
+          <option value="recent">Recently updated</option>
+          <option value="stars">Most starred</option>
+          <option value="name">Name (A–Z)</option>
+          <option value="status">Status</option>
+        </select>
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3" /></svg>
+      </label>
+    </div>
+  </div>
+
+  <section class="page-body">
+    <div class="container">
+      <div class="layout">
+        <aside class="filters" aria-label="Filters">
+          <div class="filter-group">
+            <h3>Language <button id="clear-langs" type="button">clear</button></h3>
+            <ul class="filter-list" id="lang-filters"></ul>
+          </div>
+          <div class="filter-group">
+            <h3>Status <button id="clear-status" type="button">clear</button></h3>
+            <ul class="filter-list" id="status-filters"></ul>
+          </div>
+          <div class="filter-group">
+            <h3>Show</h3>
+            <ul class="filter-list">
+              <li><label><input type="checkbox" id="show-archived" checked /><span class="lbl">Archived repos</span></label></li>
+              <li><label><input type="checkbox" id="show-meta" /><span class="lbl">Meta / config repos</span></label></li>
+            </ul>
+          </div>
+        </aside>
+
+        <div>
+          <div class="active-filters" id="active-filters" aria-live="polite"></div>
+          <div class="repo-list" id="repo-list" role="list"></div>
+          <div class="empty" id="empty" hidden>
+            <h3>No repos match those filters.</h3>
+            <p>Try a different search term, or clear the filters.</p>
+            <button type="button" id="reset-all">Reset all filters</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>
+
+<script is:inline define:vars={{ REPOS_DATA: repos }}>
+  const REPOS = REPOS_DATA;
+
+  const LANG_LABEL = {
+    css: "CSS", bash: "Bash", php: "PHP", python: "Python",
+    js: "JavaScript", jq: "jQuery", html: "HTML / Static", meta: "Meta",
+  };
+  const STATUS_LABEL = {
+    active: "Active", stable: "Stable", alpha: "Alpha",
+    archived: "Archived", deprecated: "Deprecated", eol: "End of life", meta: "Meta",
+  };
+  const STATUS_ORDER = ["active","alpha","stable","archived","deprecated","eol","meta"];
+
+  const state = {
+    query: "",
+    langs: new Set(),
+    statuses: new Set(),
+    showArchived: true,
+    showMeta: false,
+    sort: "recent",
+  };
+
+  function relTime(days) {
+    if (days < 7) return days + "d ago";
+    if (days < 60) return Math.round(days / 7) + "w ago";
+    if (days < 365) return Math.round(days / 30) + "mo ago";
+    return Math.round(days / 365) + "y ago";
+  }
+  function escapeHTML(s) {
+    return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+  }
+  function highlight(text, q) {
+    if (!q) return text;
+    const re = new RegExp("(" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig");
+    return text.replace(re, "<mark>$1</mark>");
+  }
+
+  const langCounts = {}, statusCounts = {};
+  REPOS.forEach(r => {
+    r.langs.forEach(l => langCounts[l] = (langCounts[l] || 0) + 1);
+    statusCounts[r.status] = (statusCounts[r.status] || 0) + 1;
+  });
+
+  const langOrder = Object.keys(LANG_LABEL).filter(k => langCounts[k]);
+  const statusOrder = STATUS_ORDER.filter(k => statusCounts[k]);
+
+  function renderFilterList(elId, keys, labels, counts, set) {
+    const el = document.getElementById(elId);
+    el.innerHTML = keys.map(k => `
+      <li><label>
+        <input type="checkbox" data-key="${k}" ${set.has(k) ? "checked" : ""}>
+        <span class="lbl">${labels[k]}</span>
+        <span class="count">${counts[k]}</span>
+      </label></li>`).join("");
+    el.querySelectorAll("input").forEach(cb => {
+      cb.addEventListener("change", e => {
+        const k = e.target.dataset.key;
+        if (e.target.checked) set.add(k); else set.delete(k);
+        render();
+      });
+    });
+  }
+  renderFilterList("lang-filters", langOrder, LANG_LABEL, langCounts, state.langs);
+  renderFilterList("status-filters", statusOrder, STATUS_LABEL, statusCounts, state.statuses);
+
+  function matches(r) {
+    if (!state.showArchived && (r.status === "archived" || r.status === "eol" || r.status === "deprecated")) return false;
+    if (!state.showMeta && r.meta) return false;
+    if (state.langs.size && !r.langs.some(l => state.langs.has(l))) return false;
+    if (state.statuses.size && !state.statuses.has(r.status)) return false;
+    if (state.query) {
+      const q = state.query.toLowerCase();
+      if (!r.name.toLowerCase().includes(q) && !r.desc.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  }
+  function sortFn(a, b) {
+    switch (state.sort) {
+      case "stars": return b.stars - a.stars;
+      case "name":  return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      case "status":return STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status) || a.updated - b.updated;
+      case "recent":
+      default: return a.updated - b.updated;
+    }
+  }
+
+  function renderActive() {
+    const el = document.getElementById("active-filters");
+    const chips = [];
+    if (state.query) chips.push({ label: `“${state.query}”`, clear: () => { state.query = ""; document.getElementById("search").value = ""; }});
+    [...state.langs].forEach(k => chips.push({ label: LANG_LABEL[k], clear: () => { state.langs.delete(k); document.querySelector(`#lang-filters input[data-key="${k}"]`).checked = false; }}));
+    [...state.statuses].forEach(k => chips.push({ label: STATUS_LABEL[k], clear: () => { state.statuses.delete(k); document.querySelector(`#status-filters input[data-key="${k}"]`).checked = false; }}));
+    el.innerHTML = chips.map((c, i) => `<span class="chip">${escapeHTML(c.label)}<button data-i="${i}" aria-label="Remove ${escapeHTML(c.label)}"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 3l6 6M9 3l-6 6"/></svg></button></span>`).join("");
+    el.querySelectorAll("button").forEach((b, i) => b.addEventListener("click", () => { chips[i].clear(); render(); }));
+  }
+
+  function render() {
+    const filtered = REPOS.filter(matches).sort(sortFn);
+    const list = document.getElementById("repo-list");
+    const empty = document.getElementById("empty");
+    document.getElementById("visible-count").textContent = filtered.length;
+    document.getElementById("total-count").textContent = REPOS.length;
+    if (filtered.length === 0) {
+      list.innerHTML = "";
+      empty.hidden = false;
+    } else {
+      empty.hidden = true;
+      const q = state.query;
+      list.innerHTML = filtered.map(r => `
+        <a class="repo" href="https://github.com/${r.ns}/${r.name}" data-archived="${r.status==='archived'||r.status==='eol'||r.status==='deprecated'?1:0}">
+          <div class="repo-main">
+            <div class="repo-title">
+              <h3 class="repo-name"><span class="ns">${r.ns}/</span>${highlight(escapeHTML(r.name), q)}</h3>
+              ${r.langs.map(l => `<span class="tag lang-${l}">${LANG_LABEL[l]}</span>`).join("")}
+              <span class="tag status-${r.status}">${STATUS_LABEL[r.status]}</span>
+            </div>
+            <p class="repo-desc">${highlight(r.desc, q)}</p>
+          </div>
+          <div class="repo-side">
+            <div class="repo-meta">
+              <span class="star">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7-6.3-3.8L5.7 21l1.6-7L2 9.6 9 9z"/></svg>
+                ${r.stars}
+              </span>
+              <span>${relTime(r.updated)}</span>
+            </div>
+          </div>
+        </a>`).join("");
+    }
+    renderActive();
+  }
+
+  const searchEl = document.getElementById("search");
+  searchEl.addEventListener("input", e => { state.query = e.target.value.trim(); render(); });
+  document.getElementById("show-archived").addEventListener("change", e => { state.showArchived = e.target.checked; render(); });
+  document.getElementById("show-meta").addEventListener("change", e => { state.showMeta = e.target.checked; render(); });
+  document.getElementById("sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+  document.getElementById("clear-langs").addEventListener("click", () => {
+    state.langs.clear();
+    document.querySelectorAll("#lang-filters input").forEach(cb => cb.checked = false);
+    render();
+  });
+  document.getElementById("clear-status").addEventListener("click", () => {
+    state.statuses.clear();
+    document.querySelectorAll("#status-filters input").forEach(cb => cb.checked = false);
+    render();
+  });
+  document.getElementById("reset-all").addEventListener("click", () => {
+    state.langs.clear(); state.statuses.clear(); state.query = "";
+    searchEl.value = "";
+    document.querySelectorAll(".filters input[type='checkbox']").forEach(cb => {
+      if (cb.id === "show-archived") cb.checked = true;
+      else if (cb.id === "show-meta") cb.checked = false;
+      else cb.checked = false;
+    });
+    state.showArchived = true; state.showMeta = false;
+    render();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "/" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") {
+      e.preventDefault();
+      searchEl.focus();
+    }
+  });
+  render();
+</script>
+
+<style is:global>
+  /* Open-source page styles */
+  .page-head {
+    padding-block: 64px 40px;
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-head::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(0deg, transparent 0 64px, var(--color-border) 64px 65px);
+    opacity: 0.3;
+    mask-image: radial-gradient(circle at 90% 50%, black 0%, transparent 60%);
+    -webkit-mask-image: radial-gradient(circle at 90% 50%, black 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .page-eyebrow {
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .page-eyebrow .num { color: var(--site-accent); margin-right: 8px; }
+  .page-head h1 {
+    margin: 0 0 14px;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    text-wrap: balance;
+    max-width: 18ch;
+  }
+  .page-head h1 em {
+    font-style: normal;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    color: var(--site-accent);
+    background: var(--site-accent-bg);
+    padding: 0 8px;
+    border-radius: 4px;
+  }
+  .page-head .lead {
+    font-size: 17px; line-height: 1.55;
+    color: var(--color-text-secondary);
+    max-width: 60ch; margin: 0;
+  }
+  .page-head .convention {
+    margin-top: 24px;
+    padding: 14px 18px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-raised);
+    font-family: var(--font-mono); font-size: 13px;
+    color: var(--color-text-secondary);
+    max-width: 80ch;
+  }
+  .page-head .convention code {
+    color: var(--site-accent);
+    font-weight: 500;
+  }
+
+  .toolbar {
+    position: sticky;
+    top: 60px;
+    z-index: 40;
+    background: color-mix(in oklch, var(--color-bg), transparent 5%);
+    backdrop-filter: saturate(140%) blur(6px);
+    border-bottom: 1px solid var(--color-border);
+    padding-block: 14px;
+  }
+  .toolbar .row {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) auto auto;
+    gap: 16px;
+    align-items: center;
+  }
+  @media (max-width: 760px) {
+    .toolbar .row { grid-template-columns: 1fr; }
+  }
+  .search { position: relative; }
+  .search input {
+    width: 100%;
+    padding: 10px 12px 10px 38px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    transition: border-color var(--duration-fast) var(--easing), box-shadow var(--duration-fast) var(--easing);
+  }
+  .search input:focus {
+    border-color: var(--site-accent);
+    box-shadow: 0 0 0 3px var(--site-accent-bg);
+  }
+  .search svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-tertiary);
+  }
+  .search .kbd {
+    position: absolute;
+    right: 10px; top: 50%; transform: translateY(-50%);
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--color-text-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    background: var(--color-bg);
+  }
+  .toolbar-stats {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-text-tertiary);
+    white-space: nowrap;
+  }
+  .toolbar-stats .n { color: var(--color-text); font-weight: 500; }
+  .sort-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .sort-select:hover { border-color: var(--color-border-hover); }
+  .sort-select select {
+    appearance: none;
+    background: transparent; border: none; outline: none;
+    color: inherit; font: inherit;
+    padding-right: 4px;
+    cursor: pointer;
+  }
+
+  .page-body { padding-block: 32px 80px; }
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 920px) {
+    .layout { grid-template-columns: 1fr; }
+    .filters { order: -1; }
+  }
+
+  .filters { position: sticky; top: 130px; align-self: start; }
+  .filter-group { margin-bottom: 28px; }
+  .filter-group h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-tertiary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .filter-group h3 button {
+    background: none; border: none; padding: 0;
+    color: var(--site-accent); font: inherit;
+    cursor: pointer; font-size: 11px;
+  }
+  .filter-group h3 button:hover { text-decoration: underline; }
+  .filter-list {
+    display: flex; flex-direction: column;
+    list-style: none; padding: 0; margin: 0;
+    gap: 2px;
+  }
+  .filter-list li label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 8px; margin-inline: -8px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 13.5px;
+    color: var(--color-text-secondary);
+    transition: background var(--duration-fast) var(--easing);
+  }
+  .filter-list li label:hover { background: var(--color-surface-raised); color: var(--color-text); }
+  .filter-list input[type="checkbox"] {
+    appearance: none;
+    width: 14px; height: 14px;
+    border: 1px solid var(--color-border-hover);
+    border-radius: 3px;
+    background: var(--color-surface);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    margin: 0;
+    transition: all var(--duration-fast) var(--easing);
+  }
+  .filter-list input[type="checkbox"]:checked {
+    background: var(--site-accent);
+    border-color: var(--site-accent);
+  }
+  .filter-list input[type="checkbox"]:checked::after {
+    content: "";
+    width: 7px; height: 4px;
+    border-left: 1.6px solid var(--color-bg);
+    border-bottom: 1.6px solid var(--color-bg);
+    transform: rotate(-45deg) translate(0px, -1px);
+  }
+  .filter-list .lbl { flex: 1; }
+  .filter-list .count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+  }
+  .filter-list li label:has(input:checked) { color: var(--color-text); font-weight: 500; }
+
+  .active-filters {
+    display: flex; flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    min-height: 28px;
+  }
+  .active-filters:empty { display: none; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 8px 4px 10px;
+    background: var(--site-accent-bg);
+    color: var(--site-accent);
+    border-radius: 100px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+  }
+  .chip button {
+    background: none; border: none; padding: 0;
+    color: inherit; cursor: pointer;
+    width: 16px; height: 16px;
+    display: grid; place-items: center;
+    border-radius: 100px;
+    opacity: 0.7;
+  }
+  .chip button:hover { background: color-mix(in oklch, currentColor, transparent 80%); opacity: 1; }
+
+  .repo-list {
+    display: grid;
+    gap: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+  .repo-list .repo {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px 24px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    transition: background var(--duration-fast) var(--easing);
+    align-items: center;
+  }
+  .repo-list .repo:last-child { border-bottom: none; }
+  .repo-list .repo:hover { background: var(--color-surface-raised); }
+  .repo-main { min-width: 0; }
+  .repo-title {
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .repo-list .repo-name {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 15.5px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .repo-list .repo-name .ns { color: var(--color-text-tertiary); }
+  .repo-list .repo:hover .repo-name { color: var(--site-accent); }
+  .repo-list .repo-desc {
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 80ch;
+  }
+  .repo-side {
+    display: flex; align-items: center; gap: 16px;
+    flex-shrink: 0;
+  }
+  .repo-list .repo-meta {
+    display: flex; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    align-items: center;
+  }
+  .repo-list .repo-meta .star { display: inline-flex; align-items: center; gap: 4px; }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .tag.lang-css   { background: var(--flexoki-cyan-50);    color: var(--flexoki-cyan-700); }
+  .tag.lang-bash  { background: var(--flexoki-yellow-50);  color: var(--flexoki-yellow-700); }
+  .tag.lang-php   { background: var(--flexoki-purple-50);  color: var(--flexoki-purple-700); }
+  .tag.lang-python{ background: var(--flexoki-blue-50);    color: var(--flexoki-blue-700); }
+  .tag.lang-js    { background: var(--flexoki-magenta-50); color: var(--flexoki-magenta-700); }
+  .tag.lang-jq    { background: var(--flexoki-magenta-50); color: var(--flexoki-magenta-700); }
+  .tag.lang-html  { background: var(--flexoki-orange-50);  color: var(--flexoki-orange-700); }
+  .tag.lang-meta  { background: var(--flexoki-50);         color: var(--flexoki-700); }
+
+  .tag.status-stable     { background: var(--flexoki-green-50);  color: var(--flexoki-green-700); }
+  .tag.status-alpha      { background: var(--flexoki-orange-50); color: var(--flexoki-orange-700); }
+  .tag.status-archived   { background: var(--flexoki-50);        color: var(--flexoki-600); }
+  .tag.status-eol        { background: var(--flexoki-50);        color: var(--flexoki-600); text-decoration: line-through; }
+  .tag.status-deprecated { background: var(--flexoki-red-50);    color: var(--flexoki-red-700); }
+  .tag.status-active     { background: var(--flexoki-cyan-50);   color: var(--flexoki-cyan-700); }
+  .tag.status-meta       { background: var(--flexoki-50);        color: var(--flexoki-600); }
+
+  html.theme-dark .tag.lang-css   { background: var(--flexoki-cyan-950);    color: var(--flexoki-cyan-300); }
+  html.theme-dark .tag.lang-bash  { background: var(--flexoki-yellow-950);  color: var(--flexoki-yellow-300); }
+  html.theme-dark .tag.lang-php   { background: var(--flexoki-purple-950);  color: var(--flexoki-purple-300); }
+  html.theme-dark .tag.lang-python{ background: var(--flexoki-blue-950);    color: var(--flexoki-blue-300); }
+  html.theme-dark .tag.lang-js    { background: var(--flexoki-magenta-950); color: var(--flexoki-magenta-300); }
+  html.theme-dark .tag.lang-jq    { background: var(--flexoki-magenta-950); color: var(--flexoki-magenta-300); }
+  html.theme-dark .tag.lang-html  { background: var(--flexoki-orange-950);  color: var(--flexoki-orange-300); }
+  html.theme-dark .tag.lang-meta  { background: var(--flexoki-900);         color: var(--flexoki-300); }
+  html.theme-dark .tag.status-stable     { background: var(--flexoki-green-950);  color: var(--flexoki-green-300); }
+  html.theme-dark .tag.status-alpha      { background: var(--flexoki-orange-950); color: var(--flexoki-orange-300); }
+  html.theme-dark .tag.status-archived   { background: var(--flexoki-900);        color: var(--flexoki-400); }
+  html.theme-dark .tag.status-eol        { background: var(--flexoki-900);        color: var(--flexoki-400); }
+  html.theme-dark .tag.status-deprecated { background: var(--flexoki-red-950);    color: var(--flexoki-red-300); }
+  html.theme-dark .tag.status-active     { background: var(--flexoki-cyan-950);   color: var(--flexoki-cyan-300); }
+  html.theme-dark .tag.status-meta       { background: var(--flexoki-900);        color: var(--flexoki-400); }
+
+  .repo-list .repo[data-archived="1"] .repo-name,
+  .repo-list .repo[data-archived="1"] .repo-desc { opacity: 0.7; }
+
+  .empty {
+    padding: 80px 40px;
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+  .empty h3 { margin: 0 0 8px; font-size: 18px; font-weight: 500; }
+  .empty p { margin: 0 0 16px; font-size: 14px; }
+  .empty button {
+    padding: 8px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .empty button:hover { background: var(--color-surface-raised); }
+
+  mark {
+    background: var(--flexoki-yellow-100);
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+  html.theme-dark mark { background: var(--flexoki-yellow-900); color: var(--flexoki-yellow-100); }
+
+  /* Override open-source: page also uses orange accent like the design's open-source page */
+  body[data-screen-label="02 Open Source"] {
+    --site-accent: var(--flexoki-orange-700);
+    --site-accent-bg: var(--flexoki-orange-50);
+  }
+  html.theme-dark body[data-screen-label="02 Open Source"] {
+    --site-accent: var(--flexoki-orange-400);
+    --site-accent-bg: var(--flexoki-orange-950);
+  }
+</style>

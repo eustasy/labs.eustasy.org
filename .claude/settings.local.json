@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(mkdir -p /tmp/designs)",
+      "Bash(curl -sSL \"https://api.anthropic.com/v1/design/h/g8CHwLcPUPqPlUBtnV4j6Q?open_file=index.html\" -o /tmp/designs/d1.gz)",
+      "Bash(curl -sSL \"https://api.anthropic.com/v1/design/h/C_65NnA8z5IBtSyOx9aGVw?open_file=open-source.html\" -o /tmp/designs/d2.gz)",
+      "Read(//tmp/designs/**)",
+      "Bash(mkdir -p d1 d2)",
+      "Bash(gunzip -c d1.gz)",
+      "Bash(gunzip -c d2.gz)",
+      "Bash(tar -xf d1.tar -C d1)",
+      "Bash(tar -xf d2.tar -C d2)",
+      "Bash(cygpath *)",
+      "Bash(bun --version)",
+      "Bash(git mv *)",
+      "Bash(bun install *)",
+      "Bash(cp /tmp/designs/d1/eustasy-org/project/css/*.css src/styles/)",
+      "Bash(cp /tmp/designs/d1/eustasy-org/project/assets/* public/assets/)",
+      "Bash(bun run *)",
+      "Bash(grep -oE 'REPOS_DATA=\\\\[[^]]{0,80}' dist/open-source/index.html)",
+      "Bash(grep -oE \"REPOS_DATA[^a-zA-Z][^;]{0,200}\" dist/open-source/index.html)"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+name: Refresh commits data
+
+on:
+  schedule:
+    # Every 2 hours. Commits + releases move quickly; this keeps the
+    # homepage activity feed within ~1 cache window of reality.
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-commits
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: Fetch commits & releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bun run fetch:commits
+      - name: Commit if changed
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/data/commits.json
+          if git diff --staged --quiet; then
+            echo "No commit changes."
+          else
+            git commit -m "chore(data): refresh commits snapshot"
+            git push
+          fi
