@@ -1,10 +1,18 @@
 [
   {
     "type": "discussion",
+    "title": "🛑 elementary DL-CDN Singapore is down",
+    "repo": ".uptime",
+    "meta": "2 replies",
+    "time": "6m",
+    "url": "https://github.com/eustasy/.uptime/issues/73"
+  },
+  {
+    "type": "discussion",
     "title": "🛑 Ashrise MP is down",
     "repo": ".uptime",
     "meta": "1 reply",
-    "time": "15m",
+    "time": "2h",
     "url": "https://github.com/eustasy/.uptime/issues/75"
   },
   {
@@ -12,21 +20,7 @@
     "title": "🛑 Ashrise A1 is down",
     "repo": ".uptime",
     "meta": "1 reply",
-    "time": "15m",
+    "time": "2h",
     "url": "https://github.com/eustasy/.uptime/issues/74"
-  },
-  {
-    "type": "issue",
-    "title": "🛑 elementary DL-CDN Singapore is down",
-    "repo": ".uptime",
-    "meta": "#73",
-    "time": "13h",
-    "url": "https://github.com/eustasy/.uptime/issues/73"
-  },
-  {
-    "type": "issue",
-    "repo": "labs.eustasy.org",
-    "meta": "#8",
-    "time": "2d"
   }
 ]
