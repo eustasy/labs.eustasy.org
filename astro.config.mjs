@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://eustasy.github.io/labs.eustasy.org/',
+  site: 'https://eustasy.github.io',
+  base: '/labs.eustasy.org/',
   output: 'static',
 });
