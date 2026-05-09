@@ -4,7 +4,7 @@
     "title": "🛑 elementary DL-CDN Singapore is down",
     "repo": ".uptime",
     "meta": "#73",
-    "time": "2h",
+    "time": "5h",
     "url": "https://github.com/eustasy/.uptime/issues/73"
   },
   {
@@ -18,7 +18,7 @@
     "title": "Bump actions/checkout from 4 to 6",
     "repo": "Bubbly",
     "meta": "1 reply",
-    "time": "1d",
+    "time": "2d",
     "url": "https://github.com/eustasy/Bubbly/pull/32"
   }
 ]
