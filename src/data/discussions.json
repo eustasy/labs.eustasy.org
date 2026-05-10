@@ -1,10 +1,16 @@
 [
   {
+    "type": "issue",
+    "repo": "puff-serverless",
+    "meta": "#100",
+    "time": "1h"
+  },
+  {
     "type": "discussion",
     "title": "🛑 elementary DL-CDN Singapore is down",
     "repo": ".uptime",
     "meta": "2 replies",
-    "time": "3h",
+    "time": "8h",
     "url": "https://github.com/eustasy/.uptime/issues/73"
   },
   {
@@ -12,7 +18,7 @@
     "title": "🛑 Ashrise MP is down",
     "repo": ".uptime",
     "meta": "1 reply",
-    "time": "5h",
+    "time": "11h",
     "url": "https://github.com/eustasy/.uptime/issues/75"
   },
   {
@@ -20,7 +26,7 @@
     "title": "🛑 Ashrise A1 is down",
     "repo": ".uptime",
     "meta": "1 reply",
-    "time": "5h",
+    "time": "11h",
     "url": "https://github.com/eustasy/.uptime/issues/74"
   }
 ]
