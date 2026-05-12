@@ -1,6 +1,14 @@
 [
   {
     "type": "issue",
+    "title": "Update site results",
+    "repo": "Bubbly",
+    "meta": "#33",
+    "time": "28m",
+    "url": "https://github.com/eustasy/Bubbly/issues/33"
+  },
+  {
+    "type": "issue",
     "repo": "puff-serverless",
     "meta": "#100",
     "time": "2d"
@@ -12,21 +20,5 @@
     "meta": "2 replies",
     "time": "2d",
     "url": "https://github.com/eustasy/.uptime/issues/73"
-  },
-  {
-    "type": "discussion",
-    "title": "🛑 Ashrise MP is down",
-    "repo": ".uptime",
-    "meta": "1 reply",
-    "time": "2d",
-    "url": "https://github.com/eustasy/.uptime/issues/75"
-  },
-  {
-    "type": "discussion",
-    "title": "🛑 Ashrise A1 is down",
-    "repo": ".uptime",
-    "meta": "1 reply",
-    "time": "2d",
-    "url": "https://github.com/eustasy/.uptime/issues/74"
   }
 ]
