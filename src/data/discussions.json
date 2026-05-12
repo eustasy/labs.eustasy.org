@@ -1,24 +1,24 @@
 [
   {
     "type": "issue",
-    "title": "Update site results",
-    "repo": "Bubbly",
-    "meta": "#33",
-    "time": "28m",
-    "url": "https://github.com/eustasy/Bubbly/issues/33"
+    "title": "Expand Community File Checks",
+    "repo": ".releases",
+    "meta": "#13",
+    "time": "1h",
+    "url": "https://github.com/eustasy/.releases/issues/13"
   },
   {
     "type": "issue",
-    "repo": "puff-serverless",
-    "meta": "#100",
-    "time": "2d"
+    "repo": ".releases",
+    "meta": "#12",
+    "time": "2h"
   },
   {
-    "type": "discussion",
-    "title": "🛑 elementary DL-CDN Singapore is down",
-    "repo": ".uptime",
-    "meta": "2 replies",
-    "time": "2d",
-    "url": "https://github.com/eustasy/.uptime/issues/73"
+    "type": "issue",
+    "title": "Update site results",
+    "repo": "Bubbly",
+    "meta": "#33",
+    "time": "3h",
+    "url": "https://github.com/eustasy/Bubbly/issues/33"
   }
 ]
