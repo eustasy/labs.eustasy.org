@@ -4,21 +4,21 @@
     "title": "Expand Community File Checks",
     "repo": ".releases",
     "meta": "#13",
-    "time": "1h",
+    "time": "3h",
     "url": "https://github.com/eustasy/.releases/issues/13"
   },
   {
     "type": "issue",
     "repo": ".releases",
     "meta": "#12",
-    "time": "2h"
+    "time": "4h"
   },
   {
     "type": "issue",
     "title": "Update site results",
     "repo": "Bubbly",
     "meta": "#33",
-    "time": "3h",
+    "time": "5h",
     "url": "https://github.com/eustasy/Bubbly/issues/33"
   }
 ]
