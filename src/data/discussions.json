@@ -1,10 +1,26 @@
 [
   {
     "type": "issue",
+    "title": "TypeScript Phase 2: codify envelope type and tighten tsc",
+    "repo": "puff-serverless",
+    "meta": "#103",
+    "time": "52m",
+    "url": "https://github.com/eustasy/puff-serverless/issues/103"
+  },
+  {
+    "type": "issue",
+    "title": "Migrate to TypeScript with wrangler-generated runtime types",
+    "repo": "puff-serverless",
+    "meta": "#102",
+    "time": "1h",
+    "url": "https://github.com/eustasy/puff-serverless/issues/102"
+  },
+  {
+    "type": "discussion",
     "title": "Returns are inconsistent",
     "repo": "puff-serverless",
-    "meta": "#101",
-    "time": "9h",
+    "meta": "2 replies",
+    "time": "1h",
     "url": "https://github.com/eustasy/puff-serverless/issues/101"
   },
   {
@@ -12,13 +28,13 @@
     "title": "Expand Community File Checks",
     "repo": ".releases",
     "meta": "#13",
-    "time": "14h",
+    "time": "18h",
     "url": "https://github.com/eustasy/.releases/issues/13"
   },
   {
     "type": "issue",
     "repo": ".releases",
     "meta": "#12",
-    "time": "15h"
+    "time": "18h"
   }
 ]
