@@ -4,7 +4,7 @@
     "title": "Returns are inconsistent",
     "repo": "puff-serverless",
     "meta": "#101",
-    "time": "6h",
+    "time": "9h",
     "url": "https://github.com/eustasy/puff-serverless/issues/101"
   },
   {
@@ -12,13 +12,13 @@
     "title": "Expand Community File Checks",
     "repo": ".releases",
     "meta": "#13",
-    "time": "11h",
+    "time": "14h",
     "url": "https://github.com/eustasy/.releases/issues/13"
   },
   {
     "type": "issue",
     "repo": ".releases",
     "meta": "#12",
-    "time": "12h"
+    "time": "15h"
   }
 ]
