@@ -1,10 +1,34 @@
 [
   {
     "type": "issue",
+    "title": "TypeScript: annotate helper parameters, enable noImplicitAny",
+    "repo": "puff-serverless",
+    "meta": "#106",
+    "time": "58m",
+    "url": "https://github.com/eustasy/puff-serverless/issues/106"
+  },
+  {
+    "type": "issue",
+    "title": "TypeScript: model DB row interfaces, remove any from envelope payloads",
+    "repo": "puff-serverless",
+    "meta": "#105",
+    "time": "59m",
+    "url": "https://github.com/eustasy/puff-serverless/issues/105"
+  },
+  {
+    "type": "issue",
+    "title": "TypeScript: narrow catch variables, enable useUnknownInCatchVariables",
+    "repo": "puff-serverless",
+    "meta": "#104",
+    "time": "59m",
+    "url": "https://github.com/eustasy/puff-serverless/issues/104"
+  },
+  {
+    "type": "issue",
     "title": "TypeScript Phase 2: codify envelope type and tighten tsc",
     "repo": "puff-serverless",
     "meta": "#103",
-    "time": "8h",
+    "time": "10h",
     "url": "https://github.com/eustasy/puff-serverless/issues/103"
   },
   {
@@ -12,23 +36,7 @@
     "title": "Migrate to TypeScript with wrangler-generated runtime types",
     "repo": "puff-serverless",
     "meta": "#102",
-    "time": "8h",
+    "time": "10h",
     "url": "https://github.com/eustasy/puff-serverless/issues/102"
-  },
-  {
-    "type": "discussion",
-    "title": "Returns are inconsistent",
-    "repo": "puff-serverless",
-    "meta": "2 replies",
-    "time": "8h",
-    "url": "https://github.com/eustasy/puff-serverless/issues/101"
-  },
-  {
-    "type": "issue",
-    "title": "Expand Community File Checks",
-    "repo": ".releases",
-    "meta": "#13",
-    "time": "1d",
-    "url": "https://github.com/eustasy/.releases/issues/13"
   }
 ]
