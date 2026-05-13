@@ -118,8 +118,8 @@ export function classifyStatus(repo) {
 }
 
 // Strip any leading `TYPE:` prefix from descriptions so we don't double up.
-export function cleanDescription(desc = '') {
-  return desc.replace(/^(EOL|DEPRECATED|ALPHA|TYPE)\s*[:.]\s*/i, '').trim();
+export function cleanDescription(desc) {
+  return (desc ?? '').replace(/^(EOL|DEPRECATED|ALPHA|TYPE)\s*[:.]\s*/i, '').trim();
 }
 
 export function repoOwnerName(fullName) {
