@@ -3,6 +3,12 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [cf-pages]
+  workflow_run:
+    workflows:
+      - Refresh commits data
+      - Refresh discussions data
+      - Refresh repos data
+    types: [completed]
   workflow_dispatch:
 
 permissions:
