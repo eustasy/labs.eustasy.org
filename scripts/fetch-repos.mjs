@@ -45,7 +45,7 @@ async function fetchOrg(org) {
 }
 
 function shape(node, org) {
-  const status = classifyStatus(node);
+  const status = classifyStatus(node, org);
   const langs = classifyLang(node);
   const meta = status === 'meta';
   return {

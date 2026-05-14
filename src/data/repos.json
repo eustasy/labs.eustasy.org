@@ -243,7 +243,7 @@
       "html"
     ],
     "primaryLang": "html",
-    "status": "stable",
+    "status": "archived",
     "updated": 927,
     "updatedRel": "3y ago",
     "version": "3.2.2",
@@ -261,7 +261,7 @@
       "html"
     ],
     "primaryLang": "html",
-    "status": "stable",
+    "status": "archived",
     "updated": 982,
     "updatedRel": "3y ago",
     "version": null,
@@ -279,7 +279,7 @@
       "html"
     ],
     "primaryLang": "html",
-    "status": "stable",
+    "status": "archived",
     "updated": 1045,
     "updatedRel": "3y ago",
     "version": "4.2",
@@ -297,7 +297,7 @@
       "html"
     ],
     "primaryLang": "html",
-    "status": "stable",
+    "status": "archived",
     "updated": 1341,
     "updatedRel": "4y ago",
     "version": "17.10.0",
@@ -315,7 +315,7 @@
       "html"
     ],
     "primaryLang": "html",
-    "status": "stable",
+    "status": "archived",
     "updated": 1341,
     "updatedRel": "4y ago",
     "version": "0.4.1",
@@ -333,7 +333,7 @@
       "html"
     ],
     "primaryLang": "html",
-    "status": "stable",
+    "status": "archived",
     "updated": 1352,
     "updatedRel": "4y ago",
     "version": "1.2.1",
@@ -351,7 +351,7 @@
       "jq"
     ],
     "primaryLang": "jq",
-    "status": "stable",
+    "status": "archived",
     "updated": 1356,
     "updatedRel": "4y ago",
     "version": "1.3.1",
@@ -369,7 +369,7 @@
       "html"
     ],
     "primaryLang": "html",
-    "status": "stable",
+    "status": "archived",
     "updated": 1356,
     "updatedRel": "4y ago",
     "version": "1.8.0",

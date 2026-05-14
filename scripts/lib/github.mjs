@@ -123,11 +123,11 @@ const STATUS_RE = {
   alpha: /^ALPHA\s*[:.]/i,
 };
 
-export function classifyStatus(repo) {
+export function classifyStatus(repo, org = '') {
   const name = repo.name || '';
   const desc = repo.description || '';
   if (name.startsWith('.') && name !== '.ui') return 'meta';
-  if (repo.isArchived) return 'archived';
+  if (org === 'eustasy-archive') return 'archived';
   if (STATUS_RE.eol.test(desc)) return 'eol';
   if (STATUS_RE.deprecated.test(desc)) return 'deprecated';
   if (STATUS_RE.alpha.test(desc)) return 'alpha';
