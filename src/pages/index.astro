@@ -13,7 +13,7 @@ const featured: Repo[] = FEATURED_NAMES
   .filter((r): r is Repo => Boolean(r));
 
 const publicRepos = repos.filter((r) => !r.meta).length;
-const yearsShipping = `${new Date().getFullYear() - 2014} yrs`;
+const yearsShipping = `${new Date().getFullYear() - 2007} yrs`;
 
 const TYPE_LABEL: Record<string, string> = {
   css: 'CSS-LIB',
@@ -23,6 +23,7 @@ const TYPE_LABEL: Record<string, string> = {
   js: 'JS-LIB',
   jq: 'JQUERY',
   html: 'STATIC',
+  ui: 'WEB-COMP',
   meta: 'META',
 };
 
@@ -735,6 +736,7 @@ function shortTime(days: number) {
   .repo-type.js    { background: var(--flexoki-magenta-50); color: var(--flexoki-magenta-700); }
   .repo-type.jq    { background: var(--flexoki-magenta-50); color: var(--flexoki-magenta-700); }
   .repo-type.html  { background: var(--flexoki-orange-50);  color: var(--flexoki-orange-700); }
+  .repo-type.ui    { background: var(--flexoki-green-50);   color: var(--flexoki-green-700); }
   .repo-type.meta  { background: var(--flexoki-50);         color: var(--flexoki-700); }
   .repo-type.alpha { background: var(--flexoki-orange-50);  color: var(--flexoki-orange-700); }
   html.theme-dark .repo-type.css   { background: var(--flexoki-cyan-950);    color: var(--flexoki-cyan-300); }
@@ -744,6 +746,7 @@ function shortTime(days: number) {
   html.theme-dark .repo-type.js    { background: var(--flexoki-magenta-950); color: var(--flexoki-magenta-300); }
   html.theme-dark .repo-type.jq    { background: var(--flexoki-magenta-950); color: var(--flexoki-magenta-300); }
   html.theme-dark .repo-type.html  { background: var(--flexoki-orange-950);  color: var(--flexoki-orange-300); }
+  html.theme-dark .repo-type.ui    { background: var(--flexoki-green-950);   color: var(--flexoki-green-300); }
   html.theme-dark .repo-type.meta  { background: var(--flexoki-900);         color: var(--flexoki-300); }
   html.theme-dark .repo-type.alpha { background: var(--flexoki-orange-950);  color: var(--flexoki-orange-300); }
 

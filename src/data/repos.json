@@ -66,13 +66,13 @@
   {
     "name": "Bubbly",
     "ns": "eustasy",
-    "desc": "BASH: Better SSL in Nginx in 10 minutes. Configuration files and setup scripts for Certbot.",
+    "desc": "Better SSL in Nginx in 10 minutes. Configuration files and setup scripts for Certbot.",
     "url": "https://github.com/eustasy/Bubbly",
     "stars": 217,
     "langs": [
-      "css"
+      "bash"
     ],
-    "primaryLang": "css",
+    "primaryLang": "bash",
     "status": "active",
     "updated": 1,
     "updatedRel": "1d ago",
@@ -118,9 +118,9 @@
     "url": "https://github.com/eustasy/.ui",
     "stars": 1,
     "langs": [
-      "html"
+      "ui"
     ],
-    "primaryLang": "html",
+    "primaryLang": "ui",
     "status": "active",
     "updated": 7,
     "updatedRel": "1w ago",

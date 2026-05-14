@@ -89,10 +89,28 @@ const LANG_MAP = {
   Rust: 'js',
 };
 
+const DESC_PREFIX_LANG = {
+  'CSS-LIB': 'css',
+  'BASH': 'bash',
+  'PHP-LIB': 'php',
+  'PYTHON': 'python',
+  'JS-LIB': 'js',
+  'JQUERY': 'jq',
+  'STATIC': 'html',
+  'SITE': 'html',
+};
+
 export function classifyLang(repo) {
   const name = repo.name || '';
   const isMeta = name.startsWith('.') && name !== '.ui';
   if (isMeta) return ['meta'];
+  if (name === '.ui') return ['ui'];
+  // Description TYPE prefix overrides GitHub's auto-detected language.
+  const prefixMatch = (repo.description || '').match(/^([A-Z][A-Z-]*)\s*[:.]/);
+  if (prefixMatch) {
+    const lang = DESC_PREFIX_LANG[prefixMatch[1]];
+    if (lang) return [lang];
+  }
   const primary = repo.primaryLanguage?.name;
   let lang = LANG_MAP[primary] || 'html';
   if (lang === 'js' && /^jquery/i.test(name)) lang = 'jq';
@@ -119,7 +137,7 @@ export function classifyStatus(repo) {
 
 // Strip any leading `TYPE:` prefix from descriptions so we don't double up.
 export function cleanDescription(desc) {
-  return (desc ?? '').replace(/^(EOL|DEPRECATED|ALPHA|TYPE)\s*[:.]\s*/i, '').trim();
+  return (desc ?? '').replace(/^(EOL|DEPRECATED|ALPHA|TYPE|CSS-LIB|BASH|PHP-LIB|PYTHON|JS-LIB|JQUERY|STATIC|SITE|META)\s*[:.]\s*/i, '').trim();
 }
 
 export function repoOwnerName(fullName) {
