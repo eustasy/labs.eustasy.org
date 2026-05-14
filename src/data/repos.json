@@ -1,9 +1,9 @@
 [
   {
-    "name": "labs.eustasy.org",
+    "name": "eustasy.org",
     "ns": "eustasy",
-    "desc": "SITE: eustasy Labs",
-    "url": "https://github.com/eustasy/labs.eustasy.org",
+    "desc": "eustasy.org website",
+    "url": "https://github.com/eustasy/eustasy.org",
     "stars": 0,
     "langs": [
       "html"
@@ -11,8 +11,10 @@
     "primaryLang": "html",
     "status": "active",
     "updated": 0,
-    "updatedRel": "1h ago",
+    "updatedRel": "2m ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": false
   },
   {
@@ -26,15 +28,17 @@
     ],
     "primaryLang": "js",
     "status": "alpha",
-    "updated": 0,
-    "updatedRel": "12h ago",
+    "updated": 1,
+    "updatedRel": "1d ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": false
   },
   {
     "name": "Colors.css",
     "ns": "eustasy",
-    "desc": "CSS-LIB: A colors stylesheet for backgrounds and fonts with the colors from various sources.",
+    "desc": "A colors stylesheet for backgrounds and fonts with the colors from various sources.",
     "url": "https://github.com/eustasy/Colors.css",
     "stars": 8,
     "langs": [
@@ -42,9 +46,11 @@
     ],
     "primaryLang": "css",
     "status": "active",
-    "updated": 1,
-    "updatedRel": "1d ago",
+    "updated": 2,
+    "updatedRel": "2d ago",
     "version": "2.0.9",
+    "releaseUrl": "https://github.com/eustasy/Colors.css/releases/tag/2.0.9",
+    "releaseAt": "2024-03-14T12:28:49Z",
     "meta": false
   },
   {
@@ -58,9 +64,11 @@
     ],
     "primaryLang": "php",
     "status": "alpha",
-    "updated": 1,
-    "updatedRel": "1d ago",
+    "updated": 2,
+    "updatedRel": "2d ago",
     "version": "0.5.0",
+    "releaseUrl": "https://github.com/eustasy/puff-server/releases/tag/0.5.0",
+    "releaseAt": "2017-10-18T17:00:56Z",
     "meta": false
   },
   {
@@ -74,9 +82,11 @@
     ],
     "primaryLang": "bash",
     "status": "active",
-    "updated": 1,
-    "updatedRel": "1d ago",
+    "updated": 2,
+    "updatedRel": "2d ago",
     "version": "2.2.0",
+    "releaseUrl": "https://github.com/eustasy/Bubbly/releases/tag/2.2.0",
+    "releaseAt": "2020-08-02T20:55:39Z",
     "meta": false
   },
   {
@@ -90,15 +100,17 @@
     ],
     "primaryLang": "php",
     "status": "active",
-    "updated": 4,
-    "updatedRel": "4d ago",
+    "updated": 5,
+    "updatedRel": "5d ago",
     "version": "v.3.2.0",
+    "releaseUrl": "https://github.com/eustasy/Phoenix/releases/tag/v.3.2.0",
+    "releaseAt": "2026-05-09T17:19:59Z",
     "meta": false
   },
   {
     "name": "authenticatron",
     "ns": "eustasy",
-    "desc": "PHP-LIB: HOTP / TOTP secrets with corresponding QR links and code verification from a simple PHP script.",
+    "desc": "HOTP / TOTP secrets with corresponding QR links and code verification from a simple PHP script.",
     "url": "https://github.com/eustasy/authenticatron",
     "stars": 11,
     "langs": [
@@ -109,6 +121,8 @@
     "updated": 7,
     "updatedRel": "1w ago",
     "version": "v4.1.0",
+    "releaseUrl": "https://github.com/eustasy/authenticatron/releases/tag/v4.1.0",
+    "releaseAt": "2026-05-03T15:11:04Z",
     "meta": false
   },
   {
@@ -125,12 +139,14 @@
     "updated": 7,
     "updatedRel": "1w ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": false
   },
   {
     "name": "browning",
     "ns": "eustasy",
-    "desc": "PHP-LIB: Browning is a tiny PHP function to send emails with Mailgun, that uses CURL instead of Mailgun's (slightly porky) library.",
+    "desc": "Browning is a tiny PHP function to send emails with Mailgun, that uses CURL instead of Mailgun's (slightly porky) library.",
     "url": "https://github.com/eustasy/browning",
     "stars": 3,
     "langs": [
@@ -138,9 +154,11 @@
     ],
     "primaryLang": "php",
     "status": "active",
-    "updated": 10,
-    "updatedRel": "1w ago",
+    "updated": 11,
+    "updatedRel": "2w ago",
     "version": "0.30",
+    "releaseUrl": "https://github.com/eustasy/browning/releases/tag/0.30",
+    "releaseAt": "2026-04-20T20:19:25Z",
     "meta": false
   },
   {
@@ -157,6 +175,8 @@
     "updated": 11,
     "updatedRel": "2w ago",
     "version": "2.6.4",
+    "releaseUrl": "https://github.com/eustasy/jQuery.leanModal2/releases/tag/2.6.4",
+    "releaseAt": "2026-05-03T01:52:53Z",
     "meta": false
   },
   {
@@ -170,15 +190,17 @@
     ],
     "primaryLang": "html",
     "status": "active",
-    "updated": 21,
+    "updated": 22,
     "updatedRel": "3w ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": false
   },
   {
     "name": "Locksmith",
     "ns": "eustasy",
-    "desc": "PYTHON: Licensing for Desktop Apps",
+    "desc": "Licensing for Desktop Apps",
     "url": "https://github.com/eustasy/Locksmith",
     "stars": 0,
     "langs": [
@@ -189,6 +211,8 @@
     "updated": 23,
     "updatedRel": "3w ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": false
   },
   {
@@ -202,9 +226,11 @@
     ],
     "primaryLang": "html",
     "status": "active",
-    "updated": 23,
+    "updated": 24,
     "updatedRel": "3w ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": false
   },
   {
@@ -221,6 +247,8 @@
     "updated": 927,
     "updatedRel": "3y ago",
     "version": "3.2.2",
+    "releaseUrl": "https://github.com/eustasy-archive/elementary-theme-for-google-chrome/releases/tag/3.2.2",
+    "releaseAt": "2023-10-29T21:50:36Z",
     "meta": false
   },
   {
@@ -234,9 +262,11 @@
     ],
     "primaryLang": "html",
     "status": "stable",
-    "updated": 981,
+    "updated": 982,
     "updatedRel": "3y ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": false
   },
   {
@@ -250,41 +280,47 @@
     ],
     "primaryLang": "html",
     "status": "stable",
-    "updated": 1044,
+    "updated": 1045,
     "updatedRel": "3y ago",
     "version": "4.2",
+    "releaseUrl": "https://github.com/eustasy-archive/simplet/releases/tag/4.2",
+    "releaseAt": "2017-04-10T18:21:18Z",
     "meta": false
   },
   {
     "name": "howtoubuntu.org-v1",
     "ns": "eustasy-archive",
-    "desc": "SITE: Ubuntu Tutorials and How to's",
+    "desc": "Ubuntu Tutorials and How to's",
     "url": "https://github.com/eustasy-archive/howtoubuntu.org-v1",
     "stars": 1,
     "langs": [
-      "php"
+      "html"
     ],
-    "primaryLang": "php",
+    "primaryLang": "html",
     "status": "stable",
-    "updated": 1340,
+    "updated": 1341,
     "updatedRel": "4y ago",
     "version": "17.10.0",
+    "releaseUrl": "https://github.com/eustasy-archive/howtoubuntu.org-v1/releases/tag/17.10.0",
+    "releaseAt": "2017-10-22T00:35:43Z",
     "meta": false
   },
   {
     "name": "howtoelementary.org-v1",
     "ns": "eustasy-archive",
-    "desc": "SITE: how to _______ elementary os is a site dedicated to providing high quality, beautiful guides, tutorials and terminal command references for elementary OS.",
+    "desc": "how to _______ elementary os is a site dedicated to providing high quality, beautiful guides, tutorials and terminal command references for elementary OS.",
     "url": "https://github.com/eustasy-archive/howtoelementary.org-v1",
     "stars": 1,
     "langs": [
-      "php"
+      "html"
     ],
-    "primaryLang": "php",
+    "primaryLang": "html",
     "status": "stable",
-    "updated": 1340,
+    "updated": 1341,
     "updatedRel": "4y ago",
     "version": "0.4.1",
+    "releaseUrl": "https://github.com/eustasy-archive/howtoelementary.org-v1/releases/tag/0.4.1",
+    "releaseAt": "2017-10-18T23:04:45Z",
     "meta": false
   },
   {
@@ -301,6 +337,8 @@
     "updated": 1352,
     "updatedRel": "4y ago",
     "version": "1.2.1",
+    "releaseUrl": "https://github.com/eustasy-archive/here-miss/releases/tag/1.2.1",
+    "releaseAt": "2017-11-07T18:21:41Z",
     "meta": false
   },
   {
@@ -314,9 +352,11 @@
     ],
     "primaryLang": "jq",
     "status": "stable",
-    "updated": 1355,
+    "updated": 1356,
     "updatedRel": "4y ago",
     "version": "1.3.1",
+    "releaseUrl": "https://github.com/eustasy-archive/jQuery.downBoy/releases/tag/1.3.1",
+    "releaseAt": "2017-10-26T00:22:23Z",
     "meta": false
   },
   {
@@ -330,9 +370,11 @@
     ],
     "primaryLang": "html",
     "status": "stable",
-    "updated": 1355,
+    "updated": 1356,
     "updatedRel": "4y ago",
     "version": "1.8.0",
+    "releaseUrl": "https://github.com/eustasy-archive/jQuery.equalize/releases/tag/1.8.0",
+    "releaseAt": "2017-10-26T00:19:27Z",
     "meta": false
   },
   {
@@ -349,6 +391,8 @@
     "updated": 2230,
     "updatedRel": "6y ago",
     "version": "1.4.0",
+    "releaseUrl": "https://github.com/eustasy-archive/elementary-Search/releases/tag/1.4.0",
+    "releaseAt": "2020-04-04T23:50:54Z",
     "meta": false
   },
   {
@@ -362,15 +406,17 @@
     ],
     "primaryLang": "css",
     "status": "archived",
-    "updated": 2232,
+    "updated": 2233,
     "updatedRel": "6y ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": false
   },
   {
     "name": "vala-docs.org",
     "ns": "eustasy-archive",
-    "desc": "SITE: Vala Docs",
+    "desc": "Vala Docs",
     "url": "https://github.com/eustasy-archive/vala-docs.org",
     "stars": 1,
     "langs": [
@@ -381,6 +427,8 @@
     "updated": 2984,
     "updatedRel": "8y ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": false
   },
   {
@@ -394,10 +442,30 @@
     ],
     "primaryLang": "php",
     "status": "archived",
-    "updated": 3109,
+    "updated": 3110,
     "updatedRel": "9y ago",
     "version": "0.2",
+    "releaseUrl": "https://github.com/eustasy-archive/simplet.download_auth/releases/tag/0.2",
+    "releaseAt": "2017-11-07T18:26:11Z",
     "meta": false
+  },
+  {
+    "name": ".github",
+    "ns": "eustasy",
+    "desc": "Default GitHub dot-files for eustasy repositories.",
+    "url": "https://github.com/eustasy/.github",
+    "stars": 0,
+    "langs": [
+      "meta"
+    ],
+    "primaryLang": "meta",
+    "status": "meta",
+    "updated": 0,
+    "updatedRel": "just now",
+    "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
+    "meta": true
   },
   {
     "name": ".releases",
@@ -411,8 +479,10 @@
     "primaryLang": "meta",
     "status": "meta",
     "updated": 0,
-    "updatedRel": "6m ago",
+    "updatedRel": "11h ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": true
   },
   {
@@ -427,14 +497,16 @@
     "primaryLang": "meta",
     "status": "meta",
     "updated": 0,
-    "updatedRel": "4h ago",
+    "updatedRel": "16h ago",
     "version": null,
+    "releaseUrl": null,
+    "releaseAt": null,
     "meta": true
   },
   {
     "name": ".normal",
     "ns": "eustasy",
-    "desc": "META: Normalized checks for syntax for eustasy applications. Checks PHP, CSS, JS, JSON, MD, and XML.",
+    "desc": "Normalized checks for syntax for eustasy applications. Checks PHP, CSS, JS, JSON, MD, and XML.",
     "url": "https://github.com/eustasy/.normal",
     "stars": 1,
     "langs": [
@@ -445,22 +517,8 @@
     "updated": 7,
     "updatedRel": "1w ago",
     "version": "3.0.1",
-    "meta": true
-  },
-  {
-    "name": ".github",
-    "ns": "eustasy",
-    "desc": "META: Default GitHub dot-files for eustasy repositories.",
-    "url": "https://github.com/eustasy/.github",
-    "stars": 0,
-    "langs": [
-      "meta"
-    ],
-    "primaryLang": "meta",
-    "status": "meta",
-    "updated": 7,
-    "updatedRel": "1w ago",
-    "version": null,
+    "releaseUrl": "https://github.com/eustasy/.normal/releases/tag/3.0.1",
+    "releaseAt": "2022-08-22T19:00:14Z",
     "meta": true
   }
 ]
