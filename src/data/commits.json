@@ -1,10 +1,42 @@
 [
   {
     "type": "release",
-    "title": "Phoenix v.3.2.0 — v3.2 - Haggard",
+    "title": "Phoenix v.3.2.0",
     "repo": "Phoenix",
-    "meta": "lewisgoddard",
-    "time": "2d",
+    "meta": "eustasy",
+    "time": "5d",
     "url": "https://github.com/eustasy/Phoenix/releases/tag/v.3.2.0"
+  },
+  {
+    "type": "release",
+    "title": "authenticatron v4.1.0",
+    "repo": "authenticatron",
+    "meta": "eustasy",
+    "time": "2w",
+    "url": "https://github.com/eustasy/authenticatron/releases/tag/v4.1.0"
+  },
+  {
+    "type": "release",
+    "title": "jQuery.leanModal2 2.6.4",
+    "repo": "jQuery.leanModal2",
+    "meta": "eustasy",
+    "time": "2w",
+    "url": "https://github.com/eustasy/jQuery.leanModal2/releases/tag/2.6.4"
+  },
+  {
+    "type": "release",
+    "title": "browning 0.30",
+    "repo": "browning",
+    "meta": "eustasy",
+    "time": "3w",
+    "url": "https://github.com/eustasy/browning/releases/tag/0.30"
+  },
+  {
+    "type": "release",
+    "title": "Colors.css 2.0.9",
+    "repo": "Colors.css",
+    "meta": "eustasy",
+    "time": "2y",
+    "url": "https://github.com/eustasy/Colors.css/releases/tag/2.0.9"
   }
 ]
