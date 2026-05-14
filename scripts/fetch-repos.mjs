@@ -23,7 +23,7 @@ const QUERY = `
           pushedAt
           updatedAt
           primaryLanguage { name }
-          latestRelease { tagName publishedAt }
+          latestRelease { tagName publishedAt url }
         }
       }
     }
@@ -60,6 +60,8 @@ function shape(node, org) {
     updated: daysAgo(node.pushedAt),
     updatedRel: relTimeAgo(node.pushedAt),
     version: node.latestRelease?.tagName ?? null,
+    releaseUrl: node.latestRelease?.url ?? null,
+    releaseAt: node.latestRelease?.publishedAt ?? null,
     meta,
   };
 }

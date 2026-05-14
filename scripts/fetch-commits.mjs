@@ -1,13 +1,18 @@
-// Build the "commits & releases" column: fold PushEvent and ReleaseEvent
-// from /orgs/*/events into a 5-item feed.
+// Build the "commits & releases" column.
+// Releases come from repos.json (latestRelease per repo) so we always have
+// a full cross-org release history, not just whatever landed in the events
+// stream this hour. A small number of recent commits are added from the org
+// events API to show live activity.
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { TOKEN, stableStringify } from './lib/github.mjs';
+import { TOKEN, stableStringify, relTime } from './lib/github.mjs';
 import { fetchOrgEvents, repoShortName, eventTime } from './lib/events.mjs';
 
 const OUT = 'src/data/commits.json';
-const LIMIT = 5;
+const REPOS_IN = 'src/data/repos.json';
+const RELEASE_LIMIT = 5;
+const COMMIT_LIMIT = 3;
 
 function fromPush(e) {
   const commits = e.payload?.commits;
@@ -24,51 +29,57 @@ function fromPush(e) {
   };
 }
 
-function fromRelease(e) {
-  if (e.payload?.action !== 'published') return null;
-  const rel = e.payload.release;
-  if (!rel) return null;
-  const repo = repoShortName(e.repo.name);
-  const titleParts = [`${repo} ${rel.tag_name}`];
-  if (rel.name && rel.name !== rel.tag_name) titleParts.push(rel.name);
-  return {
-    type: 'release',
-    title: titleParts.join(' — '),
-    repo,
-    meta: e.actor.display_login || e.actor.login,
-    time: eventTime(e.created_at),
-    url: rel.html_url,
-  };
-}
-
 async function main() {
   if (!TOKEN) {
     console.warn('GITHUB_TOKEN not set — leaving src/data/commits.json untouched.');
     return;
   }
 
-  const events = await fetchOrgEvents();
-  const out = [];
-  const seen = new Set();
-  for (const e of events) {
-    if (out.length >= LIMIT) break;
-    let entry = null;
-    if (e.type === 'PushEvent') entry = fromPush(e);
-    else if (e.type === 'ReleaseEvent') entry = fromRelease(e);
-    if (!entry) continue;
-    if (seen.has(entry.url)) continue;
-    seen.add(entry.url);
-    out.push(entry);
+  // Releases from repos.json (already fetched by fetch-repos.mjs)
+  let reposRaw = [];
+  try {
+    reposRaw = JSON.parse(await fs.readFile(REPOS_IN, 'utf8'));
+  } catch {
+    console.warn(`Could not read ${REPOS_IN} — run fetch-repos.mjs first.`);
   }
 
+  const releases = reposRaw
+    .filter((r) => r.releaseUrl && r.releaseAt && !r.meta)
+    .sort((a, b) => new Date(b.releaseAt) - new Date(a.releaseAt))
+    .slice(0, RELEASE_LIMIT)
+    .map((r) => ({
+      type: 'release',
+      title: `${r.name} ${r.version}`,
+      repo: r.name,
+      meta: r.ns,
+      time: relTime(r.releaseAt),
+      url: r.releaseUrl,
+    }));
+
+  // Recent commits from org events
+  const events = await fetchOrgEvents();
+  const commits = [];
+  const seenUrls = new Set(releases.map((r) => r.url));
+  for (const e of events) {
+    if (commits.length >= COMMIT_LIMIT) break;
+    if (e.type !== 'PushEvent') continue;
+    const entry = fromPush(e);
+    if (!entry || seenUrls.has(entry.url)) continue;
+    seenUrls.add(entry.url);
+    commits.push(entry);
+  }
+
+  // Releases first, then commits
+  const out = [...releases, ...commits];
+
   if (out.length === 0) {
-    console.warn('No commit/release events found. Refusing to overwrite with empty list.');
+    console.warn('No commit/release entries found. Refusing to overwrite with empty list.');
     return;
   }
 
   await fs.mkdir(path.dirname(OUT), { recursive: true });
   await fs.writeFile(OUT, stableStringify(out));
-  console.log(`Wrote ${out.length} commit/release entries to ${OUT}`);
+  console.log(`Wrote ${out.length} entries to ${OUT} (${releases.length} releases, ${commits.length} commits)`);
 }
 
 main().catch(e => {
