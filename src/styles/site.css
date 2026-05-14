@@ -118,7 +118,7 @@ body {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 2fr;
   gap: 48px;
   margin-bottom: 48px;
 }
@@ -133,6 +133,28 @@ body {
   line-height: 1.55;
   margin: 14px 0 0;
   max-width: 36ch;
+}
+.footer-brand-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 14px;
+}
+.footer-brand-links a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+.footer-brand-links a:hover { color: var(--color-text); }
+.footer-brand-links span { color: var(--color-text-tertiary); }
+.footer-col ul.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+}
+.footer-col .all-repos {
+  margin-top: 12px;
+  font-size: 14px;
 }
 .footer-col h4 {
   margin: 0 0 14px;
