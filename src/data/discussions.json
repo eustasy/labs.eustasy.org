@@ -4,7 +4,7 @@
     "title": "TypeScript: annotate helper parameters, enable noImplicitAny",
     "repo": "puff-serverless",
     "meta": "#106",
-    "time": "15h",
+    "time": "19h",
     "url": "https://github.com/eustasy/puff-serverless/issues/106"
   },
   {
@@ -12,7 +12,7 @@
     "title": "TypeScript: model DB row interfaces, remove any from envelope payloads",
     "repo": "puff-serverless",
     "meta": "#105",
-    "time": "15h",
+    "time": "19h",
     "url": "https://github.com/eustasy/puff-serverless/issues/105"
   },
   {
@@ -20,7 +20,7 @@
     "title": "TypeScript: narrow catch variables, enable useUnknownInCatchVariables",
     "repo": "puff-serverless",
     "meta": "#104",
-    "time": "15h",
+    "time": "19h",
     "url": "https://github.com/eustasy/puff-serverless/issues/104"
   },
   {
