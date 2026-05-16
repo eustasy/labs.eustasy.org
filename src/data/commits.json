@@ -1,6 +1,14 @@
 [
   {
     "type": "release",
+    "title": "Colors.css 2.1.0",
+    "repo": "Colors.css",
+    "meta": "eustasy",
+    "time": "15h",
+    "url": "https://github.com/eustasy/Colors.css/releases/tag/2.1.0"
+  },
+  {
+    "type": "release",
     "title": "Phoenix v.3.2.0",
     "repo": "Phoenix",
     "meta": "eustasy",
@@ -30,13 +38,5 @@
     "meta": "eustasy",
     "time": "4w",
     "url": "https://github.com/eustasy/browning/releases/tag/0.30"
-  },
-  {
-    "type": "release",
-    "title": "Colors.css 2.0.9",
-    "repo": "Colors.css",
-    "meta": "eustasy",
-    "time": "2y",
-    "url": "https://github.com/eustasy/Colors.css/releases/tag/2.0.9"
   }
 ]
