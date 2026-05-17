@@ -1,10 +1,8 @@
 [
   {
     "type": "issue",
-    "title": "🛑 How to elementary is down",
-    "repo": ".uptime",
-    "meta": "#76",
-    "time": "19h",
-    "url": "https://github.com/eustasy/.uptime/issues/76"
+    "repo": "puff-serverless",
+    "meta": "#107",
+    "time": "1h"
   }
 ]
